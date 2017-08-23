@@ -3,6 +3,7 @@ package com.example.savr.mlayu;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private FusedLocationProviderApi locationprovider = LocationServices.FusedLocationApi;
-    TextView latitudeText, longitudeText, gpsinfoText,gpsinfoText2,gpsinfoText3, speedText,dist;
+    TextView latitudeText, longitudeText, gpsinfoText,gpsinfoText2,gpsinfoText3, speedText,dist,kalori;
     private Double mylatitude=0.0;
     private Double mylongitude=0.0;
     private Double mylatitudeold=0.0;
@@ -104,7 +105,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         gpsinfoText3 = (TextView) v.findViewById(R.id.gps_info3);
         speedText = (TextView) v.findViewById(R.id.speed);
         dist = (TextView) v.findViewById(R.id.distanceText);
-     //   Button buttonSearch = (Button) v.findViewById(R.id.btn_Search);
+        kalori = (TextView) v.findViewById(R.id.kaloriText);
+        //   Button buttonSearch = (Button) v.findViewById(R.id.btn_Search);
         Button buttonStart = (Button) v.findViewById(R.id.btn_Start);
         Button buttonPause = (Button) v.findViewById(R.id.btn_Pause);
         final Button buttoStop = (Button) v.findViewById(R.id.btn_Stop);
@@ -161,9 +163,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             jarak = new ArrayList<>();
             totaljarak = 0;
             dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
-
-
-
         }
         Chronometer chronometer;
         chronometer = (Chronometer) view.findViewById(R.id.chronometer);
@@ -248,7 +247,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         //  diff = TimeUnit.MILLISECONDS.toMinutes(diff);
         String dateString = DateFormat.format("HH:mm:ss",new Date(Long.parseLong(String.valueOf(start)))).toString();
 
-        PolylineOptions polilyne = new PolylineOptions();
+        PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);;
         pol=mGoogleMap.addPolyline(polilyne);
     }
 
@@ -378,6 +377,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     }
 
     double totaljarak=0;
+    double kaloriburn=0,berat_badan = 60;
     Location locationOld;
     @Override
     public void onLocationChanged(Location location) {
@@ -419,12 +419,16 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
                 double speed = location.getSpeed() * 18 / 5;    //convert ke km/h dari m/s =>36000/1000
 
+                //kalori
+                kaloriburn = 0.8*berat_badan*totaljarak;
+
 
                 if (speed > 0.0)
                     speedText.setText("Current speed: " + new DecimalFormat("#.##").format(speed) + " km/hr");
                 else
                     speedText.setText(".......");
                 dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
+                kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn)) + " kcal");
 
                 mylatitudeold = mylatitude;
                 mylongitudeold = mylongitude;

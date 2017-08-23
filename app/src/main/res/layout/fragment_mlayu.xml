@@ -131,6 +131,14 @@
             android:gravity="center_vertical|center_horizontal"
             android:textSize="20sp"
             android:text="Distance"/>
+        <TextView
+            android:id="@+id/kaloriText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="20sp"
+            android:text="kalori burn"/>
+
 
     </LinearLayout>
     <fragment
