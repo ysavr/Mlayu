@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "245780852920",
+    "project_id": "mlayu-168703"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245780852920:android:8d050a76792a3dd8",
+        "android_client_info": {
+          "package_name": "com.example.savr.mlayu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245780852920-jripenelbvmvu2sdsh1m70185dhode3u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.savr.mlayu",
+            "certificate_hash": "41ede4b350092bb21d141b6c4cae206b4b9d898c"
+          }
+        },
+        {
+          "client_id": "245780852920-ot4iiu0mjt0mo874c51vth9ufpvhr6d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy592AuiMXMYSacfGqJV-8t8NPPs99ZFU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
