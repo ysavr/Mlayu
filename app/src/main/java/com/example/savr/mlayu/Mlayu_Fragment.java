@@ -61,16 +61,16 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private FusedLocationProviderApi locationprovider = LocationServices.FusedLocationApi;
-    TextView latitudeText, longitudeText, gpsinfoText,gpsinfoText2,gpsinfoText3, speedText,dist,kalori;
-    private Double mylatitude=0.0;
-    private Double mylongitude=0.0;
-    private Double mylatitudeold=0.0;
-    private Double mylongitudeold=0.0;
+    TextView latitudeText, longitudeText, gpsinfoText, gpsinfoText2, gpsinfoText3, speedText, dist, kalori;
+    private Double mylatitude = 0.0;
+    private Double mylongitude = 0.0;
+    private Double mylatitudeold = 0.0;
+    private Double mylongitudeold = 0.0;
     private Double jmlTot = 0.0;
     private Double speed;
     private double time = 10;
     static long start, endTime;
-    static int p=0;
+    static int p = 0;
     static final Double EARTH_RADIUS = 6371.00;
 
 
@@ -93,14 +93,14 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        titik=new ArrayList<>();
-        jarak=new ArrayList<>();
+        titik = new ArrayList<>();
+        jarak = new ArrayList<>();
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mlayu, container, false);
 
         latitudeText = (TextView) v.findViewById(R.id.lat);
         longitudeText = (TextView) v.findViewById(R.id.lng);
-     //   gpsinfoText = (TextView) v.findViewById(R.id.gps_info);
+        //   gpsinfoText = (TextView) v.findViewById(R.id.gps_info);
         // gpsinfoText2 = (TextView) v.findViewById(R.id.gps_info2);
         gpsinfoText3 = (TextView) v.findViewById(R.id.gps_info3);
         speedText = (TextView) v.findViewById(R.id.speed);
@@ -133,7 +133,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 try {
                     start(getView());
                     buttoStop.setEnabled(false);
-                }catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
@@ -157,36 +157,38 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    public void start (View view) throws IOException{
+    public void start(View view) throws IOException {
         if (!pauseClicked) {
             titik = new ArrayList<>();
             jarak = new ArrayList<>();
             totaljarak = 0;
+            kaloriburn = 0;
             dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
+            kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn)) + " kcal");
         }
         Chronometer chronometer;
         chronometer = (Chronometer) view.findViewById(R.id.chronometer);
 
         chronometer.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
-        if (chronometer!=null) chronometer.start();
+        if (chronometer != null) chronometer.start();
         pauseClicked = false;
     }
 
-    public void stop (View view){
+    public void stop(View view) {
         Chronometer chronometer = (Chronometer) view.findViewById(R.id.chronometer);
         chronometer.setBase(SystemClock.elapsedRealtime());
         timeWhenStopped = 0;
         pol.remove();
     }
 
-    public void pause (View view){
+    public void pause(View view) {
         Chronometer chronometer = (Chronometer) view.findViewById(R.id.chronometer);
-        if (!pauseClicked){
+        if (!pauseClicked) {
             timeWhenStopped = chronometer.getBase() - SystemClock.elapsedRealtime();
             int second = (int) timeWhenStopped / 1000;
-            gpsinfoText3.setText( Math.abs(second)+ " seconds");
+            gpsinfoText3.setText(Math.abs(second) + " seconds");
             chronometer.stop();
-            pauseClicked =true;
+            pauseClicked = true;
         }
     }
 
@@ -202,8 +204,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        //goToLocationZoom(-7.803249,110.3398252,15);
-   // =======LOCATION BASED SERVICE DENGAN GOOGLE API===============================//
+        // goToLocationZoom(-7.803249,110.3398252,15);
+        // =======LOCATION BASED SERVICE DENGAN GOOGLE API===============================//
         googleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -211,10 +213,11 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 .build();
         googleApiClient.connect();
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -222,18 +225,16 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION );
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
 
 
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(10000);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(1000);
 
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         googleApiClient.connect();
 
         Time starTime = new Time(Time.getCurrentTimezone());
