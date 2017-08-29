@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -61,21 +61,30 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:id="@+id/layoutlogin">
 
         <com.google.android.gms.common.SignInButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:id="@+id/btn_login"
             ></com.google.android.gms.common.SignInButton>
-
+<!--
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/prog"
+            android:layout_centerInParent="true"/>
+        -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Atau"
+            android:id="@+id/text1"
+            android:layout_below="@+id/btn_login"
             android:layout_centerInParent="true"/>
 
         <Button
@@ -83,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_below="@+id/btn_login"
+            android:layout_below="@+id/text1"
             android:text="Email and password"
             android:drawableLeft="@drawable/ic_mail"
             android:onClick="withemail"
@@ -91,4 +100,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

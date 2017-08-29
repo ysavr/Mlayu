@@ -1,5 +1,6 @@
 package com.example.savr.mlayu.Login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class Login extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
 
     private LinearLayout Prof_Section;
+    private RelativeLayout framelogin;
     private Button SignOut,Button_withemail;
     private SignInButton SignIn;
     private TextView Nama,Email;
@@ -45,13 +48,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 
     private static final int REQ_CODE = 9001;
     ProgressBar progressBar;
+    ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        progressBar = (ProgressBar) findViewById(R.id.prog);
+    //    progressBar = (ProgressBar) findViewById(R.id.prog);
         Prof_Section = (LinearLayout) findViewById(R.id.Prof_section);
         SignOut = (Button) findViewById(R.id.btn_logout);
         SignIn = (SignInButton) findViewById(R.id.btn_login);
@@ -60,13 +64,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         Nama = (TextView) findViewById(R.id.name);
         Email = (TextView) findViewById(R.id.email);
         Prof_Pic = (ImageView) findViewById(R.id.Prof_pic);
+        framelogin = (RelativeLayout) findViewById(R.id.layoutlogin);
 
         SignIn.setOnClickListener(this);
         SignOut.setOnClickListener(this);
         Button_withemail.setOnClickListener(this);
+        progressDialog = new ProgressDialog(this);
+
 
         Prof_Section.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+    //    progressBar.setVisibility(View.GONE);
 
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -138,12 +145,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
             Email.setText(email);
             Glide.with(this).load(img_url).into(Prof_Pic);
 
-
-            progressBar.setVisibility(View.VISIBLE);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+        //    progressBar.setVisibility(View.VISIBLE);
             updateUI(true);
-            Intent signin = new Intent(Login.this,HomeActivity.class);
-
-
         }
         else
         {
@@ -166,6 +171,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
                             updateUI(true);
                             Intent signin = new Intent(Login.this,HomeActivity.class);
                             startActivity(signin);
+                            progressDialog.dismiss();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("failure", task.getException());
@@ -182,12 +188,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         if (isLogin)
         {
             Prof_Section.setVisibility(View.GONE);
-            SignIn.setVisibility(View.GONE);
+//            SignIn.setVisibility(View.GONE);
+//            Button_withemail.setVisibility(View.GONE);
+            framelogin.setVisibility(View.GONE);
         }
         else
         {
             Prof_Section.setVisibility(View.GONE);
-            SignIn.setVisibility(View.VISIBLE);
+//            SignIn.setVisibility(View.VISIBLE);
+//            Button_withemail.setVisibility(View.VISIBLE);
+            framelogin.setVisibility(View.VISIBLE);
         }
 
 
