@@ -1,17 +1,21 @@
-package com.example.savr.mlayu;
+package com.example.savr.mlayu.Login;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.HomeActivity;
+import com.example.savr.mlayu.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -21,33 +25,59 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class Login extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
 
     private LinearLayout Prof_Section;
-    private Button SignOut;
+    private Button SignOut,Button_withemail;
     private SignInButton SignIn;
     private TextView Nama,Email;
     private ImageView Prof_Pic;
+
     private GoogleApiClient googleApiClient;
+
     private static final int REQ_CODE = 9001;
     ProgressBar progressBar;
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        progressBar = (ProgressBar) findViewById(R.id.prog);
         Prof_Section = (LinearLayout) findViewById(R.id.Prof_section);
         SignOut = (Button) findViewById(R.id.btn_logout);
         SignIn = (SignInButton) findViewById(R.id.btn_login);
+        Button_withemail = (Button) findViewById(R.id.btn_loginemail);
+
         Nama = (TextView) findViewById(R.id.name);
         Email = (TextView) findViewById(R.id.email);
         Prof_Pic = (ImageView) findViewById(R.id.Prof_pic);
+
         SignIn.setOnClickListener(this);
         SignOut.setOnClickListener(this);
+        Button_withemail.setOnClickListener(this);
+
         Prof_Section.setVisibility(View.GONE);
-        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this,this).addApi(Auth.GOOGLE_SIGN_IN_API,signInOptions).build();
+        progressBar.setVisibility(View.GONE);
+
+        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,signInOptions).build();
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -62,8 +92,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
             case R.id.btn_logout:
                 SignOut();
                 break;
+            case R.id.btn_loginemail:
+                Register();
+                break;
         }
 
+    }
+
+    private void Register() {
+        Intent RegisterLogin = new Intent(Login.this,Register.class);
+        startActivity(RegisterLogin);
     }
 
     @Override
@@ -74,10 +112,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     private void SignIn()
     {
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        Intent signin = new Intent(Login.this,HomeActivity.class);
         startActivityForResult(intent,REQ_CODE);
-        startActivity(signin);
-
     }
 
     private void SignOut()
@@ -95,13 +130,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         if (result.isSuccess())
         {
             GoogleSignInAccount account = result.getSignInAccount();
+            firebaseAuthWithGoogle(account);
             String name = account.getDisplayName();
             String email = account.getEmail();
             String img_url = account.getPhotoUrl().toString();
             Nama.setText(name);
             Email.setText(email);
             Glide.with(this).load(img_url).into(Prof_Pic);
+
+
+            progressBar.setVisibility(View.VISIBLE);
             updateUI(true);
+            Intent signin = new Intent(Login.this,HomeActivity.class);
+
+
         }
         else
         {
@@ -109,11 +151,37 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         }
     }
 
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d("id",acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("success","sad");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(true);
+                            Intent signin = new Intent(Login.this,HomeActivity.class);
+                            startActivity(signin);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("failure", task.getException());
+                            Toast.makeText(Login.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(false);
+                        }
+                    }
+                });
+    }
+
     private void updateUI (boolean isLogin)
     {
         if (isLogin)
         {
-            Prof_Section.setVisibility(View.VISIBLE);
+            Prof_Section.setVisibility(View.GONE);
             SignIn.setVisibility(View.GONE);
         }
         else

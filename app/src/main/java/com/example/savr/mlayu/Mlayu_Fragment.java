@@ -423,7 +423,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 //kalori
                 kaloriburn = 0.8*berat_badan*totaljarak;
 
-
+                //speed
                 if (speed > 0.0)
                     speedText.setText("Current speed: " + new DecimalFormat("#.##").format(speed) + " km/hr");
                 else

@@ -1,6 +1,7 @@
 package com.example.savr.mlayu;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,13 +9,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.Login.Login;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,7 +35,9 @@ public class HomeActivity extends AppCompatActivity
     Toolbar toolbar = null;
 
     GoogleMap mGooglemap;
-
+    private TextView emailText,namaText;
+    private CircleImageView poto_Profil;
+    private GoogleApiClient googleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +63,26 @@ public class HomeActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //set drawer=======================================
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View navheader = navigationView.getHeaderView(0);
+        namaText = (TextView) navheader.findViewById(R.id.username);
+        emailText = (TextView) navheader.findViewById(R.id.email);
+        poto_Profil = (CircleImageView) navheader.findViewById(R.id.profile_image);
+
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser!=null) {
+            String name = firebaseUser.getDisplayName();
+            String email = firebaseUser.getEmail();
+            String img_url = firebaseUser.getPhotoUrl().toString();
+
+            Log.d("name"," "+name);
+            namaText.setText(name);
+            emailText.setText(email);
+            Glide.with(this).load(img_url).into(poto_Profil);
+        }
     }
 
     public boolean googleServicesAvailable(){
@@ -86,16 +118,15 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        //signout
+        if (id == R.id.action_signout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent sigout = new Intent(HomeActivity.this,Login.class);
+            startActivity(sigout);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -140,5 +171,4 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

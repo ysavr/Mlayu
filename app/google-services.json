@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "245780852920",
-    "project_id": "mlayu-168703"
+    "firebase_url": "https://mlayu-168703.firebaseio.com",
+    "project_id": "mlayu-168703",
+    "storage_bucket": "mlayu-168703.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "245780852920-t99crcpu7n3flrbtd1gindlofqik7mvh.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "245780852920-jripenelbvmvu2sdsh1m70185dhode3u.apps.googleusercontent.com",
           "client_type": 1,
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245780852920-t99crcpu7n3flrbtd1gindlofqik7mvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
