@@ -3,6 +3,7 @@ package com.example.savr.mlayu;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,9 +19,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.savr.mlayu.Login.Login;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.OnConnectionFailedListener{
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -83,6 +89,17 @@ public class HomeActivity extends AppCompatActivity
             emailText.setText(email);
             Glide.with(this).load(img_url).into(poto_Profil);
         }
+
+
+        //inisialisasi GSO
+        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,signInOptions).build();
     }
 
     public boolean googleServicesAvailable(){
@@ -119,13 +136,17 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         //signout
         if (id == R.id.action_signout) {
             FirebaseAuth.getInstance().signOut();
-            Intent sigout = new Intent(HomeActivity.this,Login.class);
-            startActivity(sigout);
+
+            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    Intent signout = new Intent(HomeActivity.this,Login.class);
+                    startActivity(signout);
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }
@@ -170,5 +191,10 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

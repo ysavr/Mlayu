@@ -127,7 +127,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                updateUI(false);
+                if (status.isSuccess()){
+                    updateUI(false);
+                }else{
+
+                }
             }
         });
     }
@@ -169,7 +173,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
                             Log.d("success","sad");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(true);
-                            Intent signin = new Intent(Login.this,HomeActivity.class);
+//                            Intent signin = new Intent(Login.this,HomeActivity.class);
+//                            startActivity(signin);
+                            Intent signin = new Intent(Login.this,Data_user.class);
                             startActivity(signin);
                             progressDialog.dismiss();
                         } else {
@@ -188,19 +194,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         if (isLogin)
         {
             Prof_Section.setVisibility(View.GONE);
-//            SignIn.setVisibility(View.GONE);
-//            Button_withemail.setVisibility(View.GONE);
             framelogin.setVisibility(View.GONE);
         }
         else
         {
             Prof_Section.setVisibility(View.GONE);
-//            SignIn.setVisibility(View.VISIBLE);
-//            Button_withemail.setVisibility(View.VISIBLE);
             framelogin.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @Override

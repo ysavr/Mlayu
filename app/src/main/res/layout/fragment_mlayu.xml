@@ -1,25 +1,19 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:padding="16dp"
     tools:context="com.example.savr.mlayu.Mlayu_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2">
-
-    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutatas"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
     <!-- searching TExt
         <EditText
@@ -33,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="30sp"
+            android:textSize="50sp"
             />
     <!--Button Search
         <Button
@@ -44,34 +38,9 @@
             android:layout_gravity="center"
             android:onClick="geoLocate"/>
         -->
-        <RelativeLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_Start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/btn_Pause"
-                android:text="Start"
-                android:onClick="start"/>
-            <Button
-                android:id="@+id/btn_Pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Pause"
-                android:onClick="pause"/>
 
-            <Button
-                android:id="@+id/btn_Stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/btn_Pause"
-                android:onClick="stop"
-                android:text="Stop" />
-        </RelativeLayout>
         Latitude dan Longitude
+
         <TextView
             android:id="@+id/lat"
             android:layout_marginTop="15dp"
@@ -81,7 +50,6 @@
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/lng"
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Long"
@@ -110,44 +78,89 @@
             android:text="Time2"/>  -->
 
         <TextView
-            android:id="@+id/gps_info3"
+            android:id="@+id/text_durasi"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp"
-            android:text="Durasi"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Durasi"
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/speed"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp"
-            android:text="Speed"/>
-        <TextView
-            android:id="@+id/distanceText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp"
-            android:text="Distance"/>
-        <TextView
-            android:id="@+id/kaloriText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp"
-            android:text="kalori burn"/>
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/speed"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="20sp"
+                android:text="Speed"/>
+            <TextView
+                android:id="@+id/distanceText"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="20sp"
+                android:text="Distance"/>
+            <TextView
+                android:id="@+id/kaloriText"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="20sp"
+                android:text="kalori burn"/>
 
+        </LinearLayout>
     </LinearLayout>
     <fragment
         android:id="@+id/mapfragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
+        android:layout_below="@+id/layoutatas"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_Start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:onClick="start"
+            android:text="Start" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_Pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="pause"
+            android:text="Pause"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/btn_Start"
+            android:layout_alignStart="@+id/btn_Start" />
+
+        <Button
+            android:id="@+id/btn_Stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="stop"
+            android:text="Stop"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/btn_Start"
+            android:layout_alignEnd="@+id/btn_Start" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,7 +1,6 @@
 package com.example.savr.mlayu;
 
 
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -46,8 +45,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -61,7 +58,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private FusedLocationProviderApi locationprovider = LocationServices.FusedLocationApi;
-    TextView latitudeText, longitudeText, gpsinfoText, gpsinfoText2, gpsinfoText3, speedText, dist, kalori;
+    TextView latitudeText, longitudeText, gpsinfoText, gpsinfoText2, durasiText, speedText, dist, kalori;
     private Double mylatitude = 0.0;
     private Double mylongitude = 0.0;
     private Double mylatitudeold = 0.0;
@@ -102,17 +99,24 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         longitudeText = (TextView) v.findViewById(R.id.lng);
         //   gpsinfoText = (TextView) v.findViewById(R.id.gps_info);
         // gpsinfoText2 = (TextView) v.findViewById(R.id.gps_info2);
-        gpsinfoText3 = (TextView) v.findViewById(R.id.gps_info3);
+        durasiText = (TextView) v.findViewById(R.id.text_durasi);
         speedText = (TextView) v.findViewById(R.id.speed);
         dist = (TextView) v.findViewById(R.id.distanceText);
         kalori = (TextView) v.findViewById(R.id.kaloriText);
+
         //   Button buttonSearch = (Button) v.findViewById(R.id.btn_Search);
         Button buttonStart = (Button) v.findViewById(R.id.btn_Start);
-        Button buttonPause = (Button) v.findViewById(R.id.btn_Pause);
+        final Button buttonPause = (Button) v.findViewById(R.id.btn_Pause);
         final Button buttoStop = (Button) v.findViewById(R.id.btn_Stop);
+
         buttoStop.setEnabled(false);
+        buttonPause.setEnabled(false);
+
         dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
 
+        durasiText.setVisibility(View.GONE);
+        latitudeText.setVisibility(View.GONE);
+        longitudeText.setVisibility(View.GONE);
         /*/==================searching Lokasi====================================
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,11 +137,10 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 try {
                     start(getView());
                     buttoStop.setEnabled(false);
+                    buttonPause.setEnabled(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
         buttoStop.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +189,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         if (!pauseClicked) {
             timeWhenStopped = chronometer.getBase() - SystemClock.elapsedRealtime();
             int second = (int) timeWhenStopped / 1000;
-            gpsinfoText3.setText(Math.abs(second) + " seconds");
+            durasiText.setText(Math.abs(second) + " seconds");
             chronometer.stop();
             pauseClicked = true;
         }
@@ -270,9 +273,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -405,7 +405,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 distance = CalculationByDistance(mylatitude, mylongitude, mylatitudeold, mylongitudeold);
                 //jarak.add(distance);
             }
-
 
             if (distance < 0.2 || mylatitudeold == 0) {
                 latitudeText.setText("Latitude : " + String.valueOf(mylatitude));
