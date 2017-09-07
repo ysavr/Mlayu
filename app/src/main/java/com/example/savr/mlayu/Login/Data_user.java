@@ -1,5 +1,6 @@
 package com.example.savr.mlayu.Login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.HomeActivity;
 import com.example.savr.mlayu.Model.UserProfile;
 import com.example.savr.mlayu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,12 +35,16 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
     private RadioButton radioLK,radioPR;
     private String id,email,name,img_url;
 
+    ProgressDialog progressDialog;
+
     private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_user);
+
+        progressDialog = new ProgressDialog(this);
 
         profile_nama = (TextView) findViewById(R.id.profile_nama);
         profile_email = (TextView) findViewById(R.id.profile_email);
@@ -91,13 +97,18 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
     //insert userprofile ke database
     private void registerUserProfile(UserProfile userProfile){
         databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userProfile.getId());
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
         databaseReference.setValue(userProfile).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+
                 if (task.isSuccessful()){
                     Toast.makeText(Data_user.this, "Berhasil Simpan", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Intent gotoMlayuFragment = new Intent(Data_user.this, HomeActivity.class);
+                    startActivity(gotoMlayuFragment);
                 }
-
             }
         });
     }

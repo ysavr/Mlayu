@@ -1,6 +1,7 @@
 package com.example.savr.mlayu;
 
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -11,8 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +23,10 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.Login.Data_user;
+import com.example.savr.mlayu.Model.Lari;
+import com.example.savr.mlayu.Model.UserProfile;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -40,11 +43,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
@@ -58,28 +69,25 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private FusedLocationProviderApi locationprovider = LocationServices.FusedLocationApi;
-    TextView latitudeText, longitudeText, gpsinfoText, gpsinfoText2, durasiText, speedText, dist, kalori;
+    TextView latitudeText, longitudeText, gpsinfoText, gpsinfoText2, durasiTextView, speedText, distTextView, kalori;
     private Double mylatitude = 0.0;
     private Double mylongitude = 0.0;
     private Double mylatitudeold = 0.0;
     private Double mylongitudeold = 0.0;
-    private Double jmlTot = 0.0;
-    private Double speed;
-    private double time = 10;
-    static long start, endTime;
-    static int p = 0;
-    static final Double EARTH_RADIUS = 6371.00;
-
-
-    ArrayList<LatLng> titik;
-    ArrayList<Double> jarak;
+    private String id;
+    private Polyline pol;
 
     private boolean pauseClicked;
     private long timeWhenStopped = 0;
+    private DatabaseReference databaseReference;
 
-    LocationManager locationManager;
+    static final Double EARTH_RADIUS = 6371.00;
     static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private Polyline pol;
+
+    ProgressDialog progressDialog;
+
+    ArrayList<LatLng> titik;
+    ArrayList<Double> jarak;
 
     public Mlayu_Fragment() {
         // Required empty public constructor
@@ -90,6 +98,11 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser!=null){
+            id = firebaseUser.getUid();
+        }
+
         titik = new ArrayList<>();
         jarak = new ArrayList<>();
         // Inflate the layout for this fragment
@@ -99,9 +112,9 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         longitudeText = (TextView) v.findViewById(R.id.lng);
         //   gpsinfoText = (TextView) v.findViewById(R.id.gps_info);
         // gpsinfoText2 = (TextView) v.findViewById(R.id.gps_info2);
-        durasiText = (TextView) v.findViewById(R.id.text_durasi);
+        durasiTextView = (TextView) v.findViewById(R.id.text_durasi);
         speedText = (TextView) v.findViewById(R.id.speed);
-        dist = (TextView) v.findViewById(R.id.distanceText);
+        distTextView = (TextView) v.findViewById(R.id.distanceText);
         kalori = (TextView) v.findViewById(R.id.kaloriText);
 
         //   Button buttonSearch = (Button) v.findViewById(R.id.btn_Search);
@@ -112,9 +125,9 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         buttoStop.setEnabled(false);
         buttonPause.setEnabled(false);
 
-        dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
+        distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
 
-        durasiText.setVisibility(View.GONE);
+        durasiTextView.setVisibility(View.GONE);
         latitudeText.setVisibility(View.GONE);
         longitudeText.setVisibility(View.GONE);
         /*/==================searching Lokasi====================================
@@ -130,6 +143,22 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             }
         });
         //========================================================================*/
+        //======================================GET DATA=====================================
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
+        ValueEventListener getdata = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                berat_badan=userProfile.getBerat();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        databaseReference.addValueEventListener(getdata);
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,8 +195,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             jarak = new ArrayList<>();
             totaljarak = 0;
             kaloriburn = 0;
-            dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
-            kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn)) + " kcal");
+            distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
+            kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn))+" kcal");
         }
         Chronometer chronometer;
         chronometer = (Chronometer) view.findViewById(R.id.chronometer);
@@ -178,10 +207,30 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     }
 
     public void stop(View view) {
+        Savelari();
         Chronometer chronometer = (Chronometer) view.findViewById(R.id.chronometer);
         chronometer.setBase(SystemClock.elapsedRealtime());
+
         timeWhenStopped = 0;
         pol.remove();
+    }
+
+    private void Savelari() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Lari");
+        String id_lari = databaseReference.push().getKey();
+        double calorieburn = kaloriburn;
+        double jarak = totaljarak;
+        long durasi = timeWhenStopped*(-1); //dalam millisecond
+
+        Lari lari = new Lari(id,id_lari,durasi, jarak,calorieburn);
+        databaseReference.child(id_lari).setValue(lari).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(getActivity(), "Berhasil Simpan", Toast.LENGTH_SHORT).show();
+                }
+        }
+        });
     }
 
     public void pause(View view) {
@@ -189,7 +238,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         if (!pauseClicked) {
             timeWhenStopped = chronometer.getBase() - SystemClock.elapsedRealtime();
             int second = (int) timeWhenStopped / 1000;
-            durasiText.setText(Math.abs(second) + " seconds");
+            durasiTextView.setText(Math.abs(second) + " seconds");
             chronometer.stop();
             pauseClicked = true;
         }
@@ -221,13 +270,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
@@ -239,17 +281,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         googleApiClient.connect();
-
-        Time starTime = new Time(Time.getCurrentTimezone());
-        starTime.setToNow();
-
-        long start = System.currentTimeMillis();
-//========================convert dalam millisecond===========
-       // gpsinfoText.setText(starTime.format("%k:%M:%S"));
-//============================================================
-        //  long diff = startTime;
-        //  diff = TimeUnit.MILLISECONDS.toMinutes(diff);
-        String dateString = DateFormat.format("HH:mm:ss",new Date(Long.parseLong(String.valueOf(start)))).toString();
 
         PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);;
         pol=mGoogleMap.addPolyline(polilyne);
@@ -324,14 +355,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(),
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, mLocationRequest, this);
@@ -342,15 +367,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getActivity(),
-                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         LocationServices.FusedLocationApi.
@@ -378,7 +396,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     }
 
     double totaljarak=0;
-    double kaloriburn=0,berat_badan = 60;
+    double kaloriburn=0;
+    int berat_badan;
     Location locationOld;
     @Override
     public void onLocationChanged(Location location) {
@@ -427,7 +446,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                     speedText.setText("Current speed: " + new DecimalFormat("#.##").format(speed) + " km/hr");
                 else
                     speedText.setText(".......");
-                dist.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
+                distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
                 kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn)) + " kcal");
 
                 mylatitudeold = mylatitude;
@@ -446,16 +465,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                         Math.sin(dLon/2) * Math.sin(dLon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return Radius * c;
-    }
-
-    private double getTotalDistances(){
-        double totaljarak=0;
-        for (Double jarakSatuan:jarak
-             ) {
-            totaljarak=totaljarak+jarakSatuan;
-        }
-
-        return totaljarak;
     }
 
     private static final int TWO_MINUTES = 1000 * 60 * 2;

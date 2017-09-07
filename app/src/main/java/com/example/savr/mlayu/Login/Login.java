@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     private GoogleApiClient googleApiClient;
 
     private static final int REQ_CODE = 9001;
-    ProgressBar progressBar;
+
     ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
