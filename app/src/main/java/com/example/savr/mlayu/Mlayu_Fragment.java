@@ -151,6 +151,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
                 berat_badan=userProfile.getBerat();
+                Log.d("Berat badan: ", berat_badan+" kg");
             }
 
             @Override
@@ -222,6 +223,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         double jarak = totaljarak;
         long durasi = timeWhenStopped*(-1); //dalam millisecond
 
+        //save data lari
         Lari lari = new Lari(id,id_lari,durasi, jarak,calorieburn);
         databaseReference.child(id_lari).setValue(lari).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -440,6 +442,9 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
                 //kalori
                 kaloriburn = 0.8*berat_badan*totaljarak;
+                Log.d("Berat badan: ", berat_badan+" kg");
+                Log.d("Total Jarak: ", totaljarak+" km");
+                Log.d("KALORI KEBAKAR", String.valueOf(kaloriburn));
 
                 //speed
                 if (speed > 0.0)
