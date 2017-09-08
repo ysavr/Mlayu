@@ -18,6 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.Fragment.AboutFragment;
+import com.example.savr.mlayu.Fragment.HistoryFragment;
+import com.example.savr.mlayu.Fragment.MeFragment;
+import com.example.savr.mlayu.Fragment.Mlayu_Fragment;
 import com.example.savr.mlayu.Login.Login;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

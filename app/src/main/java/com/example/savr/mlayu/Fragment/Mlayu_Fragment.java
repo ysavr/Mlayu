@@ -1,4 +1,4 @@
-package com.example.savr.mlayu;
+package com.example.savr.mlayu.Fragment;
 
 
 import android.app.ProgressDialog;
@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.savr.mlayu.Login.Data_user;
 import com.example.savr.mlayu.Model.Lari;
 import com.example.savr.mlayu.Model.UserProfile;
+import com.example.savr.mlayu.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;

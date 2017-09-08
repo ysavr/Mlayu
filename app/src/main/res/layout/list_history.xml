@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listHistory"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.savr.mlayu.Fragment.HistoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="7dp"
+            android:weightSum="1">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_directions_run_black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:orientation="vertical"
+                android:layout_weight="9.88">
+
+                <TextView
+                    android:id="@+id/listJarak"
+                    android:text="jarak"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/listWaktu"
+                    android:text="waktu"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/listTanggal"
+                    android:text="tanggal"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
