@@ -56,7 +56,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -77,6 +79,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private Double mylongitudeold = 0.0;
     private String id;
     private Polyline pol;
+    String timeStamp;
 
     private boolean pauseClicked;
     private long timeWhenStopped = 0;
@@ -89,20 +92,56 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
     ArrayList<LatLng> titik;
     ArrayList<Double> jarak;
+    private ValueEventListener getdata;
 
     public Mlayu_Fragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null){
             id = firebaseUser.getUid();
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("user").child(id);
+        getdata = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                berat_badan=userProfile.getBerat();
+                Log.d("Berat badan: ", berat_badan+" kg");
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        databaseReference.addValueEventListener(getdata);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        databaseReference.removeEventListener(getdata);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
         titik = new ArrayList<>();
         jarak = new ArrayList<>();
@@ -146,21 +185,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         //========================================================================*/
         //======================================GET DATA=====================================
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
-        ValueEventListener getdata = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-                berat_badan=userProfile.getBerat();
-                Log.d("Berat badan: ", berat_badan+" kg");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        databaseReference.addValueEventListener(getdata);
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,9 +247,10 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         double calorieburn = kaloriburn;
         double jarak = totaljarak;
         long durasi = timeWhenStopped*(-1); //dalam millisecond
+        String tanggal = timeStamp;
 
         //save data lari
-        Lari lari = new Lari(id,id_lari,durasi, jarak,calorieburn);
+        Lari lari = new Lari(id,id_lari,durasi, jarak,calorieburn,tanggal);
         databaseReference.child(id_lari).setValue(lari).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -446,6 +471,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 Log.d("Berat badan: ", berat_badan+" kg");
                 Log.d("Total Jarak: ", totaljarak+" km");
                 Log.d("KALORI KEBAKAR", String.valueOf(kaloriburn));
+                timeStamp = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(Calendar.getInstance().getTime());
+                Log.d("",timeStamp);
 
                 //speed
                 if (speed > 0.0)

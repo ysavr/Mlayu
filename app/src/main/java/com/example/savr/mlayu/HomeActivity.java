@@ -22,6 +22,7 @@ import com.example.savr.mlayu.Fragment.AboutFragment;
 import com.example.savr.mlayu.Fragment.HistoryFragment;
 import com.example.savr.mlayu.Fragment.MeFragment;
 import com.example.savr.mlayu.Fragment.Mlayu_Fragment;
+import com.example.savr.mlayu.Login.Data_user;
 import com.example.savr.mlayu.Login.Login;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -39,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -81,6 +82,8 @@ public class HomeActivity extends AppCompatActivity
         namaText = (TextView) navheader.findViewById(R.id.username);
         emailText = (TextView) navheader.findViewById(R.id.email);
         poto_Profil = (CircleImageView) navheader.findViewById(R.id.profile_image);
+
+        poto_Profil.setOnClickListener(this);
 
         FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser!=null) {
@@ -200,5 +203,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent toUSerprofil = new Intent(this, Data_user.class);
+        startActivity(toUSerprofil);
     }
 }

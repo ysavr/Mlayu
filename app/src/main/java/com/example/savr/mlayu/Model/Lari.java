@@ -13,15 +13,16 @@ public class Lari {
     private long waktu; //dalam millisecond
     private double jarak;
     private double kalori;
+    private String tanggal;
 
 
-
-    public Lari(String id_user, String id, long waktu, double jarak, double kalori) {
+    public Lari(String id_user, String id, long waktu, double jarak, double kalori, String tanggal) {
         this.id = id;
         this.id_user = id_user;
         this.waktu = waktu;
         this.jarak = jarak;
         this.kalori = kalori;
+        this.tanggal = tanggal;
     }
 
     public String getId() {
@@ -64,6 +65,13 @@ public class Lari {
         this.kalori = kalori;
     }
 
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
 
     public Lari() {
     }
