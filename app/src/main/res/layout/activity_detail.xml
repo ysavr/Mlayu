@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.savr.mlayu.DetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/layoutpp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/detailUserPhoto"
+            android:layout_width="106dp"
+            android:layout_height="96dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_person_black_24dp"
+            app:civ_border_color="#BBDEFB"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/detailUserPhoto"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@+id/userphoto"
+                android:text="Nama"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_nama"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/userphoto"
+                android:text="Email"
+                android:textAppearance="?android:textAppearanceMedium" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Jarak"
+            android:typeface="monospace"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="jarak"
+            android:textAppearance="?android:textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layoutdurasi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="15dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/icondurasi"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_person_black_24dp"
+                app:civ_border_color="#BBDEFB"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/icondurasi"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/icondurasi"
+                    android:typeface="monospace"
+                    android:text="Duration"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/icondurasi"
+                    android:text="Durasi"
+                    android:textAppearance="?android:textAppearanceMedium" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutkalori"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="15dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iconkalori"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_person_black_24dp"
+                app:civ_border_color="#BBDEFB"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iconkalori"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:typeface="monospace"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="Kalori"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Kalori"
+                    android:textAppearance="?android:textAppearanceMedium" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

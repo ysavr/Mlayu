@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.example.savr.mlayu.LariAdapter;
 import com.example.savr.mlayu.Model.Lari;
@@ -27,15 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HistoryFragment extends Fragment {
 
     DatabaseReference databaseReference;
     List<Lari> lariList;
     private RecyclerView recyclerView;
     private LariAdapter lariAdapter;
+    private RecyclerView.Adapter adapter;
     private String id;
 
     public HistoryFragment() {
@@ -54,6 +51,7 @@ public class HistoryFragment extends Fragment {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -72,7 +70,7 @@ public class HistoryFragment extends Fragment {
                     Lari lari = larisnapshot.getValue(Lari.class);
                     lariList.add(lari);
                 }
-                lariAdapter = new LariAdapter(lariList);
+                lariAdapter = new LariAdapter(lariList,getActivity());
                 recyclerView.setAdapter(lariAdapter);
             }
 
