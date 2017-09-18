@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.savr.mlayu.HomeActivity;
+import com.example.savr.mlayu.Activity.HomeActivity;
 import com.example.savr.mlayu.Model.UserProfile;
 import com.example.savr.mlayu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.R.attr.id;
 
 public class Data_user extends AppCompatActivity implements View.OnClickListener{
     private TextView profile_nama,profile_email, Textprofile_umur,Textprofile_tinggi,Textprofile_berat;

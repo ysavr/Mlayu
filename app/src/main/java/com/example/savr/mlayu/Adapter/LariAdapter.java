@@ -1,7 +1,6 @@
-package com.example.savr.mlayu;
+package com.example.savr.mlayu.Adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,16 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.savr.mlayu.Login.Register;
+import com.example.savr.mlayu.Activity.DetailActivity;
 import com.example.savr.mlayu.Model.Lari;
+import com.example.savr.mlayu.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by SAVR on 13/09/2017.
@@ -40,7 +37,6 @@ public class LariAdapter extends RecyclerView.Adapter<LariAdapter.MyViewHolder>{
             waktuTV = (TextView) itemView.findViewById(R.id.listWaktu);
             tanggalTV = (TextView) itemView.findViewById(R.id.listTanggal);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearlayout);
-
         }
     }
 

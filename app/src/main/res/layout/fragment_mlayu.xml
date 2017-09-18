@@ -27,8 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="50sp"
-            />
+            android:textSize="50sp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_stopwatch"/>
     <!--Button Search
         <Button
             android:id="@+id/btn_Search"
@@ -91,30 +95,60 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/speed"
+            <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="20sp"
-                android:text="Speed"/>
-            <TextView
-                android:id="@+id/distanceText"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="Speed"/>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_speed"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="20sp"
-                android:text="Distance"/>
-            <TextView
-                android:id="@+id/kaloriText"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/distanceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="Distance"/>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_distance"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="20sp"
-                android:text="kalori burn"/>
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/kaloriText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="kalori burn"/>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_flame"/>
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

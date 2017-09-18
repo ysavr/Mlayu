@@ -1,10 +1,11 @@
-package com.example.savr.mlayu;
+package com.example.savr.mlayu.Activity;
 
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.savr.mlayu.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

@@ -20,7 +20,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/Prof_pic"
-            android:src="@drawable/photo"
+            android:src="@drawable/ic_person"
             />
 
         <LinearLayout

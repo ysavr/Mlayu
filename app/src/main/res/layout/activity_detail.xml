@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.savr.mlayu.DetailActivity">
+    tools:context="com.example.savr.mlayu.Activity.DetailActivity">
 
     <RelativeLayout
         android:id="@+id/layoutpp"
@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/profile_nama"
+                android:id="@+id/detailProfile_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -39,7 +39,7 @@
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/profile_email"
+                android:id="@+id/detailProfile_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_nama"
@@ -57,15 +57,13 @@
         android:layout_margin="15dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Jarak"
-            android:typeface="monospace"
-            android:textAppearance="?android:textAppearanceLarge" />
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_distance"/>
 
         <TextView
+            android:id="@+id/detailjarak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -85,14 +83,12 @@
             android:layout_weight="1"
             android:layout_margin="15dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/icondurasi"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_person_black_24dp"
-                app:civ_border_color="#BBDEFB"
-                app:civ_border_width="2dp" />
+                android:src="@drawable/ic_stopwatch" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -111,6 +107,7 @@
                     android:textAppearance="?android:textAppearanceMedium" />
 
                 <TextView
+                    android:id="@+id/detailDurasi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -129,14 +126,12 @@
             android:layout_weight="1"
             android:layout_margin="15dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/iconkalori"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_person_black_24dp"
-                app:civ_border_color="#BBDEFB"
-                app:civ_border_width="2dp" />
+                android:src="@drawable/ic_flame" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -154,6 +149,7 @@
                     android:textAppearance="?android:textAppearanceMedium" />
 
                 <TextView
+                    android:id="@+id/detailKalori"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

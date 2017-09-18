@@ -1,4 +1,4 @@
-package com.example.savr.mlayu;
+package com.example.savr.mlayu.Activity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -24,6 +24,7 @@ import com.example.savr.mlayu.Fragment.MeFragment;
 import com.example.savr.mlayu.Fragment.Mlayu_Fragment;
 import com.example.savr.mlayu.Login.Data_user;
 import com.example.savr.mlayu.Login.Login;
+import com.example.savr.mlayu.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;

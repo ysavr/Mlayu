@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.savr.mlayu.LariAdapter;
+import com.example.savr.mlayu.Adapter.LariAdapter;
 import com.example.savr.mlayu.Model.Lari;
 import com.example.savr.mlayu.R;
 import com.google.firebase.auth.FirebaseAuth;

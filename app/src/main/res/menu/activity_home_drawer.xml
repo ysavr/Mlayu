@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_lari"
-            android:icon="@drawable/ic_directions_run_black"
+            android:icon="@drawable/ic_direction_run_black"
             android:title="Lari" />
         <item
             android:id="@+id/nav_historry"
