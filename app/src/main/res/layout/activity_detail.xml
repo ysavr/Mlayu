@@ -19,7 +19,7 @@
             android:layout_height="96dp"
             android:layout_marginBottom="5dp"
             android:src="@drawable/ic_person_black_24dp"
-            app:civ_border_color="#BBDEFB"
+            app:civ_border_color="#00ff0000"
             app:civ_border_width="2dp" />
 
         <LinearLayout
@@ -36,17 +36,18 @@
                 android:layout_marginTop="15dp"
                 android:layout_toRightOf="@+id/userphoto"
                 android:text="Nama"
-                android:textAppearance="?android:textAppearanceMedium" />
+                android:textAppearance="?android:textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/detailProfile_email"
+                android:id="@+id/detailTanggalLari"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_nama"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/userphoto"
-                android:text="Email"
+                android:text="Tanggal"
+                android:textStyle="bold"
                 android:textAppearance="?android:textAppearanceMedium" />
         </LinearLayout>
     </RelativeLayout>
