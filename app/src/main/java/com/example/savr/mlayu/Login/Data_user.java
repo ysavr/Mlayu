@@ -37,7 +37,7 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
     private RadioButton radioLK,radioPR;
     private String id,email,name,img_url;
 
-    int berat_badan,tinggi,umur;
+    int berat_badan;
 
     ProgressDialog progressDialog;
 

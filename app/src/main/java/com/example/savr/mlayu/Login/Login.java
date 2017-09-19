@@ -53,7 +53,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-    //    progressBar = (ProgressBar) findViewById(R.id.prog);
         Prof_Section = (LinearLayout) findViewById(R.id.Prof_section);
         SignOut = (Button) findViewById(R.id.btn_logout);
         SignIn = (SignInButton) findViewById(R.id.btn_login);
@@ -71,7 +70,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 
 
         Prof_Section.setVisibility(View.GONE);
-    //    progressBar.setVisibility(View.GONE);
 
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -149,7 +147,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 
             progressDialog.setMessage("Please wait...");
             progressDialog.show();
-        //    progressBar.setVisibility(View.VISIBLE);
             updateUI(true);
         }
         else

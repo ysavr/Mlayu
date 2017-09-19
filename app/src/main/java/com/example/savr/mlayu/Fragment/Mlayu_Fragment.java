@@ -476,10 +476,10 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
                 //speed
                 if (speed > 0.0)
-                    speedText.setText("Current speed: " + new DecimalFormat("#.##").format(speed) + " km/hr");
+                    speedText.setText("" + new DecimalFormat("#.##").format(speed) + " km/hr");
                 else
                     speedText.setText(".......");
-                distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
+                distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's");
                 kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn)) + " kcal");
 
                 mylatitudeold = mylatitude;

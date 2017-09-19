@@ -21,8 +21,6 @@ public class DetailActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    private DatabaseReference databaseReference;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
