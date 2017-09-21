@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.savr.mlayu.Fragment.AboutFragment">
 
     <LinearLayout
@@ -68,7 +69,7 @@
                 android:paddingLeft="27dp"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:text="Deskripsi"
+                android:text="Aplikasi ini dibuat untuk memotivasi orang - orang agar memiliki kebiasaan hidup sehat. Aplikasi ini di desain untuk membantu tracking lari anda. Aplikasi ini dapat memberikan rute yang anda lewati saat berlari dan memberikan info jarak dan waktu lari yang anda tempuh, jumlah kalori terbakar."
                 android:textSize="20sp"/>
         </android.support.v7.widget.CardView>
 

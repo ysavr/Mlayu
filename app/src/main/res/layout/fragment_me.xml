@@ -29,6 +29,7 @@
                 android:textStyle="bold" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/poto_profile_ME"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
@@ -126,6 +127,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/Btn_Edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"

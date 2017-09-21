@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         //=========check google play service ada tidak========
         if (googleServicesAvailable()){
-            Toast.makeText(this,"Perfect",Toast.LENGTH_LONG).show();
             setContentView(R.layout.activity_home);
         }
 
@@ -97,7 +96,6 @@ public class HomeActivity extends AppCompatActivity
             emailText.setText(email);
             Glide.with(this).load(img_url).into(poto_Profil);
         }
-
 
         //inisialisasi GSO
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
