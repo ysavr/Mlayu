@@ -50,7 +50,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         Textprofile_umur = (TextView) view.findViewById(R.id.umur_ME);
 
         btnEdit = (Button) view.findViewById(R.id.Btn_Edit);
-        btnEdit.setOnClickListener((View.OnClickListener) this);
+        btnEdit.setOnClickListener(this);
 
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
