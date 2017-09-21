@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class MeFragment extends Fragment implements View.OnClickListener{
+public class MeFragment extends Fragment{
     private TextView profile_nama,profile_email, Textprofile_umur,Textprofile_tinggi,Textprofile_berat;
     private CircleImageView poto_Profil;
     public String id,email,name,img_url;
@@ -50,7 +50,12 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         Textprofile_umur = (TextView) view.findViewById(R.id.umur_ME);
 
         btnEdit = (Button) view.findViewById(R.id.Btn_Edit);
-        btnEdit.setOnClickListener(this);
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"wawww",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
@@ -88,10 +93,5 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
         }
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(getActivity(),"wawww",Toast.LENGTH_SHORT).show();
     }
 }
