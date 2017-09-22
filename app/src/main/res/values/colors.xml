@@ -13,4 +13,5 @@
     <color name="colorline">#4fec80</color>
     <color name="colorbackground">#FF4D68FC</color>
     <color name="colorUIblue">#03A9F4</color>
+    <color name="colorTransparant">#00ff0000</color>
 </resources>

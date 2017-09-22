@@ -1,18 +1,21 @@
 package com.example.savr.mlayu.Fragment;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.savr.mlayu.Login.Data_user;
 import com.example.savr.mlayu.Model.UserProfile;
 import com.example.savr.mlayu.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,13 +34,12 @@ public class MeFragment extends Fragment{
     private CircleImageView poto_Profil;
     public String id,email,name,img_url;
     public Button btnEdit;
-
     String berat_badan,tinggi_badan,umur;
 
     private DatabaseReference databaseReference;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_me, container, false);
@@ -57,6 +59,7 @@ public class MeFragment extends Fragment{
             }
         });
 
+//======================Retrieve data===============================
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser!=null){
@@ -92,6 +95,74 @@ public class MeFragment extends Fragment{
             databaseReference.addValueEventListener(getdata);
 
         }
+        //==========================Show Dialog============================
+        //berat dialog
+        Textprofile_berat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final View ViewBerat = inflater.inflate(R.layout.dialog_berat,null);
+                final EditText berat = (EditText) ViewBerat.findViewById(R.id.dialog_beratTV);
+
+                builder.setMessage("Set Berat")
+                        .setView(ViewBerat)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String b = berat.getText().toString();
+                                if (!b.isEmpty()){
+                                    Textprofile_berat.setText(b);
+                                }else {
+                                    Toast.makeText(getActivity(),"Silahkan diisi",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancel",null)
+                        .setCancelable(false);
+
+                AlertDialog dialog =builder.create();
+                dialog.show();
+            }
+        });
+
+        Textprofile_tinggi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                View viewTinggi = inflater.inflate(R.layout.dialog_tinggi,null);
+
+                final TextView tv = (TextView) viewTinggi.findViewById(R.id.tv);
+                tv.setVisibility(View.GONE);
+                NumberPicker numberPicker = (NumberPicker) viewTinggi.findViewById(R.id.numberpickertinggi);
+
+                numberPicker.setMinValue(100);
+                numberPicker.setMaxValue(300);
+                numberPicker.setWrapSelectorWheel(true);
+
+                numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                        String t =String.valueOf(newVal).toString();
+                        Log.d("Tinggi badan: ", newVal+" cm");
+                        tv.setText(t);
+                    }
+                });
+
+                builder.setMessage("Set Tinggi")
+                        .setView(viewTinggi)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Textprofile_tinggi.setText(tv.getText());
+                            }
+                        })
+                        .setNegativeButton("Cancel",null)
+                        .setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
         return view;
     }
+
 }
