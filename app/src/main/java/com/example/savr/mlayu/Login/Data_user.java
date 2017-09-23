@@ -34,7 +34,6 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
     private CircleImageView poto_Profil;
     private Button Button_save;
     private RadioGroup radioGroupJeniskel;
-    private RadioButton radioLK,radioPR;
     private String id,email,name,img_url;
 
     int berat_badan;
@@ -58,8 +57,6 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
         Textprofile_umur = (TextView) findViewById(R.id.profile_umur);
         Textprofile_tinggi = (TextView) findViewById(R.id.profile_tinggi);
         Textprofile_berat = (TextView) findViewById(R.id.profile_berat);
-        radioLK = (RadioButton) findViewById(R.id.Radiomale);
-        radioPR = (RadioButton) findViewById(R.id.Radiofemale);
 
         Button_save = (Button) findViewById(R.id.btnsimpan_profile);
 

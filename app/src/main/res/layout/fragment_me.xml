@@ -50,6 +50,35 @@
                 android:layout_height="wrap_content"
                 android:text="email"/>
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="3dp">
+                <RadioGroup
+                    android:id="@+id/radioJK_ME"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:text="Laki-laki"
+                        android:id="@+id/RadiomaleME"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:text="Perempuan"
+                        android:id="@+id/RadiofemaleME"/>
+                </RadioGroup>
+
+            </android.support.v7.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

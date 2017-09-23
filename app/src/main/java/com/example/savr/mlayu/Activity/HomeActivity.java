@@ -206,7 +206,13 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        Intent toUSerprofil = new Intent(this, Data_user.class);
-        startActivity(toUSerprofil);
+        MeFragment fragment = new MeFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container,fragment);
+        fragmentTransaction.commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }
