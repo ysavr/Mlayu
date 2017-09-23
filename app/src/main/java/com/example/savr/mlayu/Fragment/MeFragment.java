@@ -96,7 +96,35 @@ public class MeFragment extends Fragment{
 
         }
         //==========================Show Dialog============================
-        //berat dialog
+        //Umur dialog
+        Textprofile_umur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                View ViewUmur = inflater.inflate(R.layout.dialog_umur,null);
+                final EditText umur = (EditText) ViewUmur.findViewById(R.id.dialog_umurTV);
+
+                builder.setMessage("Set Umur")
+                        .setView(ViewUmur)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String T = umur.getText().toString();
+                                if (!T.isEmpty()){
+                                    Textprofile_umur.setText(T);
+                                }else{
+                                    Toast.makeText(getActivity(),"Silahkan diisi",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancel",null)
+                        .setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+        //Berat dialog
         Textprofile_berat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,11 +148,12 @@ public class MeFragment extends Fragment{
                         .setNegativeButton("Cancel",null)
                         .setCancelable(false);
 
-                AlertDialog dialog =builder.create();
+                AlertDialog dialog = builder.create();
                 dialog.show();
             }
         });
 
+        //Tinggi dialog
         Textprofile_tinggi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

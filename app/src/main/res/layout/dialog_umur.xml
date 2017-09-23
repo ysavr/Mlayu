@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:orientation="horizontal">
+    android:padding="5dp">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/TextI"
+        android:id="@+id/TextII"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_margin="25dp">
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/dialog_beratTV"
+            android:id="@+id/dialog_umurTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Berat"/>
+            android:hint="Umur"/>
     </android.support.design.widget.TextInputLayout>
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_marginTop="35dp"
         android:layout_marginRight="25dp"
         android:layout_weight="0.1"
-        android:text="Kg"
+        android:text="Tahun"
         android:textSize="15sp" />
 
 </LinearLayout>
