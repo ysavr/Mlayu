@@ -6,8 +6,26 @@ package com.example.savr.mlayu.Model;
 
 public class Titik {
 
-    double latitude;
-    double longitude;
+    private String id_lari;
+    private double latitude;
+    private double longitude;
+
+    public Titik(String id_lari, double latitude, double longitude) {
+        this.id_lari = id_lari;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Titik() {
+    }
+
+    public String getId_lari() {
+        return id_lari;
+    }
+
+    public void setId_lari(String id_lari) {
+        this.id_lari = id_lari;
+    }
 
     public double getLatitude() {
         return latitude;
@@ -23,13 +41,5 @@ public class Titik {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public Titik(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public Titik() {
     }
 }

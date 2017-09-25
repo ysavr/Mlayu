@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.savr.mlayu.Login.Data_user;
 import com.example.savr.mlayu.Model.Lari;
+import com.example.savr.mlayu.Model.Titik;
 import com.example.savr.mlayu.Model.UserProfile;
 import com.example.savr.mlayu.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -55,10 +56,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -84,6 +90,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private boolean pauseClicked;
     private long timeWhenStopped = 0;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseTitik;
 
     static final Double EARTH_RADIUS = 6371.00;
     static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -258,6 +265,23 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                     Toast.makeText(getActivity(), "Berhasil Simpan", Toast.LENGTH_SHORT).show();
                 }
         }
+        });
+
+        //save Titik  LatLang
+        databaseTitik = FirebaseDatabase.getInstance().getReference("Titik");
+        databaseTitik.child("Titik").push();
+        for (LatLng t:titik)
+        {
+            Log.d("Titik: ", t+"");
+        }
+
+        databaseTitik.child(id_lari).setValue(titik).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(getActivity(), "Berhasil Simpan", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 
@@ -463,7 +487,6 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 Log.d("JARAK", String.valueOf(distance));
                 totaljarak = totaljarak + distance;
 
-
                 double speed = location.getSpeed() * 18 / 5;    //convert ke km/h dari m/s =>36000/1000
 
                 //kalori
@@ -494,8 +517,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         double dLat = Math.toRadians(lat2-lat1);
         double dLon = Math.toRadians(lon2-lon1);
         double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                        Math.sin(dLon/2) * Math.sin(dLon/2);
+                   Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                   Math.sin(dLon/2) * Math.sin(dLon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return Radius * c;
     }
