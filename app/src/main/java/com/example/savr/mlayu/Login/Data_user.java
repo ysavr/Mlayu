@@ -2,6 +2,7 @@ package com.example.savr.mlayu.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
     private CircleImageView poto_Profil;
     private Button Button_save;
     private RadioGroup radioGroupJeniskel;
-    private String id,email,name,img_url;
+    private String id,email,name,img_url,gender;
 
     int berat_badan;
 
@@ -78,8 +79,12 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-                    berat_badan=userProfile.getBerat();
-                    Log.d("Berat badan: ", berat_badan+" kg");
+                    if (gender==null){
+                        berat_badan=0;
+                    }else {
+                        berat_badan = userProfile.getBerat();
+                        Log.d("Berat badan: ", berat_badan + " kg");
+                    }
                 }
 
                 @Override
@@ -99,7 +104,7 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
         Integer tinggi = Integer.parseInt(Textprofile_tinggi.getText().toString());
         Integer umur = Integer.parseInt(Textprofile_umur.getText().toString());
 
-        String gender = "Laki-laki";
+        gender = "Laki-laki";
         if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.Radiomale){
             gender = "Laki-laki";
         }else if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.Radiofemale){

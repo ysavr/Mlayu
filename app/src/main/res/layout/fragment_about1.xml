@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.savr.mlayu.Fragment.AboutFragment">
+    tools:context="com.example.savr.mlayu.Fragment.AboutFragment1">
 
     <LinearLayout
         android:orientation="vertical"
@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/run"/>
+            android:src="@drawable/icon_gradien"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"

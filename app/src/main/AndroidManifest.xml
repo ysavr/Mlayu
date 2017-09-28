@@ -68,8 +68,8 @@
         <activity android:name=".Login.Data_user" />
         <activity
             android:name=".Activity.DetailActivity"
-            android:parentActivityName=".Activity.HomeActivity">
-        </activity>
+            android:parentActivityName=".Activity.HomeActivity"></activity>
+        <activity android:name=".Activity.AboutActivity"></activity>
     </application>
 
 </manifest>

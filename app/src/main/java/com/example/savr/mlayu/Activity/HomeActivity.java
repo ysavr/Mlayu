@@ -18,11 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.savr.mlayu.Fragment.AboutFragment;
+import com.example.savr.mlayu.Fragment.AboutFragment1;
 import com.example.savr.mlayu.Fragment.HistoryFragment;
 import com.example.savr.mlayu.Fragment.MeFragment;
 import com.example.savr.mlayu.Fragment.Mlayu_Fragment;
-import com.example.savr.mlayu.Login.Data_user;
 import com.example.savr.mlayu.Login.Login;
 import com.example.savr.mlayu.R;
 import com.google.android.gms.auth.api.Auth;
@@ -187,11 +186,13 @@ public class HomeActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_about) {
-            AboutFragment fragment = new AboutFragment();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,fragment);
-            fragmentTransaction.commit();
+//            AboutFragment1 fragment = new AboutFragment1();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction =
+//                    getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container,fragment);
+//            fragmentTransaction.commit();
+            Intent intent = new Intent(this,AboutActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

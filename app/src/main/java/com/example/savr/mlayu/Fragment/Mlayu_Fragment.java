@@ -275,6 +275,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             Log.d("Titik: ", t+"");
         }
 
+
         databaseTitik.child(id_lari).setValue(titik).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -334,7 +335,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         googleApiClient.connect();
 
-        PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);;
+        PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);
         pol=mGoogleMap.addPolyline(polilyne);
     }
 
