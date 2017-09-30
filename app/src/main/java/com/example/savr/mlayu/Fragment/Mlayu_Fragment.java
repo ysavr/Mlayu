@@ -272,7 +272,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         databaseTitik.child("Titik").push();
         for (LatLng t:titik)
         {
-            Log.d("Titik: ", t+"");
+          //  Log.d("Titik: ", t+"");
         }
 
 
@@ -464,7 +464,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             }
 
             if (locationOld != null) {
-                Log.d("isbetter", String.valueOf(isBetterLocation(locationOld, location)));
+             //   Log.d("isbetter", String.valueOf(isBetterLocation(locationOld, location)));
             }
 
             locationOld = location;
@@ -482,21 +482,21 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 latitudeText.setText("Latitude : " + String.valueOf(mylatitude));
                 longitudeText.setText("Langitude : " + String.valueOf(mylongitude));
 
-                Log.d("TITIK", mylatitude + " " + mylongitude);
+            //    Log.d("TITIK", mylatitude + " " + mylongitude);
                 titik.add(new LatLng(mylatitude, mylongitude));
                 pol.setPoints(titik);
-                Log.d("JARAK", String.valueOf(distance));
+            //    Log.d("JARAK", String.valueOf(distance));
                 totaljarak = totaljarak + distance;
 
                 double speed = location.getSpeed() * 18 / 5;    //convert ke km/h dari m/s =>36000/1000
 
                 //kalori
                 kaloriburn = 0.8*berat_badan*totaljarak;
-                Log.d("Berat badan: ", berat_badan+" kg");
-                Log.d("Total Jarak: ", totaljarak+" km");
-                Log.d("KALORI KEBAKAR", String.valueOf(kaloriburn));
+//                Log.d("Berat badan: ", berat_badan+" kg");
+//                Log.d("Total Jarak: ", totaljarak+" km");
+//                Log.d("KALORI KEBAKAR", String.valueOf(kaloriburn));
                 timeStamp = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(Calendar.getInstance().getTime());
-                Log.d("",timeStamp);
+            //    Log.d("",timeStamp);
 
                 //speed
                 if (speed > 0.0)

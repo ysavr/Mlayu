@@ -43,7 +43,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private TextView profile_nama, tanggal_lari;
     private TextView jaraktextView,durasitextView,kaloritextView;
     private CircleImageView poto_Profil;
-    private String id,email,name,img_url;
+    private String id,name,img_url;
+    private Double mylatitude;
+    private Double mylongitude;
 
     private Polyline pol;
     GoogleMap mGoogleMap;
@@ -68,7 +70,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         durasitextView = (TextView) findViewById(R.id.detailDurasi);
         kaloritextView = (TextView) findViewById(R.id.detailKalori);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapfragmentDetail);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapfragmentDetail);
+        mapFragment.getMapAsync(this);
 
         final PolylineOptions polyline = new PolylineOptions().color(Color.RED).geodesic(true);
 
@@ -84,30 +87,11 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
             //retrieve Titik Latlang
-            databaseReference = FirebaseDatabase.getInstance().getReference("Titik").child("Lari");
 
-            ValueEventListener getData=new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    ArrayList<Titik> rute = new ArrayList<>();
-//                    for (DataSnapshot titiksnapshot: dataSnapshot.getChildren()){
-//                        rute.add(titiksnapshot.getValue(Titik.class));
-//                        Fragment googleMap = getSupportFragmentManager().findFragmentById(R.id.mapfragmentDetail);
-//
-//                        PolylineOptions polylineOptions = new PolylineOptions();
-//
-//                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            };
-            databaseReference.addValueEventListener(getData);
         }
 
         Bundle intent = getIntent().getExtras();
+        intent.getString("id");
         tanggal_lari.setText("Ran on "+intent.getString("tanggal"));
         jaraktextView.setText(intent.getString("jarak"));
         durasitextView.setText(intent.getString("durasi"));
@@ -118,12 +102,48 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+//
+//        LatLng center = new LatLng(-7.8039629, 110.3900468);
+//        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 15);
+//        mGoogleMap.moveCamera(update);
+//        PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);
+//        pol=mGoogleMap.addPolyline(polilyne);
 
-        LatLng center = new LatLng(-7.8039629, 110.3900468);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 15);
-        mGoogleMap.moveCamera(update);
-        PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);
-        pol=mGoogleMap.addPolyline(polilyne);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Titik");
+
+        ValueEventListener getData=new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ArrayList<LatLng> rute = new ArrayList<>();
+                PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);
+                pol=mGoogleMap.addPolyline(polilyne);
+
+                for (DataSnapshot titiksnapshot: dataSnapshot.getChildren()){
+                    Titik titik=titiksnapshot.getValue(Titik.class);
+                    if (titik!=null) {
+                        Log.d("titik", String.valueOf(titik.getLatitude()));
+
+                        LatLng point = new LatLng(titik.getLatitude(), titik.getLongitude());
+                        rute.add(point);
+                    }else {
+                        Log.d("titik", String.valueOf("null"));
+                    }
+                }
+
+                if (rute.size()>0){
+                //    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rute.get(0),19));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(rute.get(0),19));
+                }
+                pol.setPoints(rute);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        databaseReference.child(getIntent().getStringExtra("id")).addListenerForSingleValueEvent(getData);
     }
 
     @Override

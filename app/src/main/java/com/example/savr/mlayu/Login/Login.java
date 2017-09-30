@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.Activity.HomeActivity;
+import com.example.savr.mlayu.Model.UserProfile;
 import com.example.savr.mlayu.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -32,6 +34,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
 
@@ -47,6 +54,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     private static final int REQ_CODE = 9001;
 
     ProgressDialog progressDialog;
+    private DatabaseReference databaseReference;
 
     private FirebaseAuth mAuth;
     @Override
@@ -82,6 +90,50 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser!=null){
+            String id = firebaseUser.getUid();
+            progressDialog.show();
+            databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
+            ValueEventListener getdata = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                    if (userProfile!=null){
+                        if (userProfile.getGender()==null){
+                            goToDataUser();
+                        }
+                        else{
+                            goToHome();
+                        }
+                    }else {
+                        goToDataUser();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+            databaseReference.addValueEventListener(getdata);
+        }
+
+    }
+
+    private void goToDataUser() {
+        progressDialog.show();
+        Intent gotoDataUser = new Intent(getApplicationContext(),Data_user.class);
+        startActivity(gotoDataUser);
+        progressDialog.dismiss();
+    }
+
+    private void goToHome(){
+        progressDialog.show();
+        Intent gotoMlayuFragment = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(gotoMlayuFragment);
+        progressDialog.dismiss();
     }
 
     @Override
@@ -170,8 +222,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
                             updateUI(true);
 //                            Intent signin = new Intent(Login.this,HomeActivity.class);
 //                            startActivity(signin);
-                            Intent signin = new Intent(Login.this,Data_user.class);
-                            startActivity(signin);
+                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if (firebaseUser!=null){
+                                String id = firebaseUser.getUid();
+
+                                databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
+                                ValueEventListener getdata = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                                        if (userProfile!=null){
+                                            if (userProfile.getGender()==null)goToDataUser();
+                                            else goToHome();
+                                        }else {
+                                            goToDataUser();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                };
+                                databaseReference.addValueEventListener(getdata);
+                            }
+//                            Intent signin = new Intent(Login.this,Data_user.class);
+//                            startActivity(signin);
                             progressDialog.dismiss();
                         } else {
                             // If sign in fails, display a message to the user.

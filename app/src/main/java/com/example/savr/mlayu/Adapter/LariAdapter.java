@@ -66,7 +66,8 @@ public class LariAdapter extends RecyclerView.Adapter<LariAdapter.MyViewHolder>{
     //menampilkan data
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Lari lari = lariList.get(position);
-
+        String id_lari;
+        id_lari = lari.getId();
         holder.jarakTV.setText(Double.parseDouble(new DecimalFormat("#.###").format(lari.getJarak())) + " km");
 
         long waktu = lari.getWaktu();
@@ -84,6 +85,7 @@ public class LariAdapter extends RecyclerView.Adapter<LariAdapter.MyViewHolder>{
             public void onClick(View v) {
                 Intent ToDetail = new Intent(activity,DetailActivity.class);
 
+                ToDetail.putExtra("id",lari.getId());
                 ToDetail.putExtra("jarak", holder.jarakTV.getText().toString());
                 ToDetail.putExtra("durasi",holder.waktuTV.getText().toString());
                 ToDetail.putExtra("tanggal",holder.tanggalTV.getText().toString());
