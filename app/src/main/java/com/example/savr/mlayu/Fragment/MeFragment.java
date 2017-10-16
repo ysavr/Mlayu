@@ -243,10 +243,10 @@ public class MeFragment extends Fragment{
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(getActivity(),"Waoouuwww Nice",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Success Update",Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }else {
-                    Toast.makeText(getActivity(),"Ga isoh om",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Can't Update",Toast.LENGTH_SHORT).show();
                 }
             }
         });

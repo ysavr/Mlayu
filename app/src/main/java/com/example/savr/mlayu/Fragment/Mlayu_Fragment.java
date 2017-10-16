@@ -405,6 +405,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(5*1000);
 
+
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(),
@@ -413,6 +414,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, mLocationRequest, this);
+
 
     }
 
@@ -502,7 +504,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 if (speed > 0.0)
                     speedText.setText("" + new DecimalFormat("#.##").format(speed) + " km/hr");
                 else
-                    speedText.setText(".......");
+                     speedText.setText(".......");
                 distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's");
                 kalori.setText(Double.parseDouble(new DecimalFormat("#.###").format(kaloriburn)) + " kcal");
 
