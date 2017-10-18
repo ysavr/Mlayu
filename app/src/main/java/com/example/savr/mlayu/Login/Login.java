@@ -65,6 +65,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         SignOut = (Button) findViewById(R.id.btn_logout);
         SignIn = (SignInButton) findViewById(R.id.btn_login);
         Button_withemail = (Button) findViewById(R.id.btn_loginemail);
+        Button_withemail.setVisibility(View.GONE);
 
         Nama = (TextView) findViewById(R.id.name);
         Email = (TextView) findViewById(R.id.email);

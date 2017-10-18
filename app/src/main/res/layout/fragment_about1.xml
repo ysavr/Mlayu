@@ -9,69 +9,28 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/icon_gradien"/>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:background="@color/colorbackground"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="17dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp"
-                android:textColor="@color/cardview_light_background"
-                android:text="VERSION"
-                android:textSize="20sp" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="27dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:text="Mlayu, version 1.0"
-                android:textSize="20sp" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:background="@color/colorbackground"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="17dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp"
-                android:textColor="@color/cardview_light_background"
-                android:text="ABOUT"
-                android:textSize="20sp" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/textabout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="27dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:text="Aplikasi ini dibuat untuk memotivasi orang - orang agar memiliki kebiasaan hidup sehat. Aplikasi ini di desain untuk membantu tracking lari anda. Aplikasi ini dapat memberikan rute yang anda lewati saat berlari dan memberikan info jarak dan waktu lari yang anda tempuh, jumlah kalori terbakar."
-                android:textSize="20sp"/>
-        </android.support.v7.widget.CardView>
-
+            android:src="@drawable/winner"/>
+        <TextView
+                android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sport Application"
+            android:textSize="12pt"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Motivate people to have healthy living habit and monitor results your activities, people can know how much physical ability of their body in exercise and can manage the amount of caloric intake consumed by knowing the number of caloric released."
+            android:textSize="9pt"
+            android:padding="20dp"/>
     </LinearLayout>
 </ScrollView>

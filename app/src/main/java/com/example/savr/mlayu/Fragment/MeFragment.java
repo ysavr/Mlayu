@@ -77,11 +77,11 @@ public class MeFragment extends Fragment{
                 Integer tinggi = Integer.parseInt(Textprofile_tinggi.getText().toString());
                 Integer umur = Integer.parseInt(Textprofile_umur.getText().toString());
 
-                String gender = "Laki-laki";
+                String gender = "Male";
                 if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.RadiomaleME){
-                    gender = "Laki-laki";
+                    gender = "Male";
                 }else if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.RadiofemaleME){
-                    gender = "Perempuan";
+                    gender = "Female";
                 }else {
                     Toast.makeText(getActivity(), "Pilih Jenis kelamin", Toast.LENGTH_SHORT).show();
                 }
@@ -119,9 +119,9 @@ public class MeFragment extends Fragment{
                     Textprofile_berat.setText(berat_badan);
                     Textprofile_tinggi.setText(tinggi_badan);
 
-                    if (gender.equals("Laki-laki")){
+                    if (gender.equals("Male")){
                         radioLK.setChecked(true);
-                    }else if(gender.equals("Perempuan")){
+                    }else if(gender.equals("Female")){
                         radioPR.setChecked(true);
                     }else {
                         radioLK.setChecked(true);

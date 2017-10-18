@@ -3,10 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.savr.mlayu.Fragment.AboutFragment2">
-
-    <ImageView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/preview"/>
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/stopwatch"/>
+        <TextView
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Realtime"
+            android:textSize="12pt"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="Auotomatic route Tracking and record activity"
+            android:textSize="9pt"/>
+
+
+
+    </LinearLayout>
 
 </FrameLayout>

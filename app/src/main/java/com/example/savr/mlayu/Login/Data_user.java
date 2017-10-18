@@ -98,22 +98,31 @@ public class Data_user extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        profile_nama.getText().toString();
-        profile_email.getText().toString();
-        Integer berat = Integer.parseInt(Textprofile_berat.getText().toString());
-        Integer tinggi = Integer.parseInt(Textprofile_tinggi.getText().toString());
-        Integer umur = Integer.parseInt(Textprofile_umur.getText().toString());
-
-        gender = "Laki-laki";
-        if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.Radiomale){
-            gender = "Laki-laki";
-        }else if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.Radiofemale){
-            gender = "Perempuan";
-        }else {
-            Toast.makeText(this, "Pilih Jenis kelamin", Toast.LENGTH_SHORT).show();
+        if (Textprofile_umur.getText().toString().length()==0){
+            Textprofile_umur.setError("Age required");
+        }else if (Textprofile_berat.getText().toString().length()==0){
+            Textprofile_berat.setError("Weight required");
+        }else if (Textprofile_tinggi.getText().toString().length()==0){
+            Textprofile_tinggi.setError("Height required");
         }
-        UserProfile userProfile = new UserProfile(id,name,email,gender,umur,berat,tinggi);
-        registerUserProfile(userProfile);
+        else{
+            profile_nama.getText().toString();
+            profile_email.getText().toString();
+            Integer berat = Integer.parseInt(Textprofile_berat.getText().toString());
+            Integer tinggi = Integer.parseInt(Textprofile_tinggi.getText().toString());
+            Integer umur = Integer.parseInt(Textprofile_umur.getText().toString());
+
+            gender = "Male";
+            if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.Radiomale){
+                gender = "Male";
+            }else if (radioGroupJeniskel.getCheckedRadioButtonId()==R.id.Radiofemale){
+                gender = "Female";
+            }else {
+                Toast.makeText(this, "Pilih Jenis kelamin", Toast.LENGTH_SHORT).show();
+            }
+            UserProfile userProfile = new UserProfile(id,name,email,gender,umur,berat,tinggi);
+            registerUserProfile(userProfile);
+        }
     }
 
     //insert userprofile ke database

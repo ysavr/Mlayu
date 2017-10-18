@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@drawable/preview"
     tools:context="com.example.savr.mlayu.Login.Login">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:gravity="center"
         android:id="@+id/Prof_section"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp">
@@ -58,7 +58,25 @@
                 android:id="@+id/btn_logout"/>
 
         </LinearLayout>
+
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/icon_gradien"
+            />
+
+    </LinearLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,15 +84,21 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="15dp"
-        android:id="@+id/layoutlogin">
+        android:orientation="vertical"
 
+        android:id="@+id/layoutlogin">
         <com.google.android.gms.common.SignInButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:id="@+id/btn_login"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_backgroud"
             ></com.google.android.gms.common.SignInButton>
+
+
+
+
 <!--
         <ProgressBar
             android:layout_width="wrap_content"
@@ -88,11 +112,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_below="@+id/btn_login"
             android:text="Email and password"
             android:drawableLeft="@drawable/ic_mail"
             android:onClick="withemail"
-            android:id="@+id/btn_loginemail"/>
+            android:id="@+id/btn_loginemail"
+            />
 
     </RelativeLayout>
 
