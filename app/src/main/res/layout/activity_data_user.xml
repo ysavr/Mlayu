@@ -8,12 +8,13 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/atas"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/background_profile"
@@ -48,26 +49,22 @@
                 android:text="Email"
                 android:textAppearance="?android:textAppearanceMedium" />
 
-
-
-
-
         </LinearLayout>
 
 
-
             <LinearLayout
+                android:layout_below="@+id/atas"
+                android:id="@+id/layoutke2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
 
-
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
                     <TextView
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -92,7 +89,9 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
                     <TextView
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -116,7 +115,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
                     <TextView
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -141,10 +142,10 @@
                     android:id="@+id/radioJK"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
                     <RadioButton
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -164,6 +165,7 @@
             </LinearLayout>
 
         <Button
+            android:layout_below="@+id/layoutke2"
             android:id="@+id/btnsimpan_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,6 +176,6 @@
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFF" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>
