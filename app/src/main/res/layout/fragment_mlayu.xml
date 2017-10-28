@@ -124,7 +124,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:tint="@color/colorUIblue"
+                    android:tint="@color/colorIconspeed"
                     android:src="@drawable/ic_speed" />
 
                 <TextView
@@ -146,7 +146,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:tint="@color/colorUIblue"
+                    android:tint="@color/colorIcondistance"
                     android:src="@drawable/ic_distance"/>
                 <TextView
                     android:paddingTop="5dp"
@@ -166,7 +166,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:tint="@color/colorUIblue"
+                    android:tint="@color/colorIconflame"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_flame"/>
                 <TextView

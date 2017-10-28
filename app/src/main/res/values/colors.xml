@@ -7,7 +7,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
-    <color name="colorIcon">#FFFFFf</color>
+    <color name="colorIconflame">#e67a45</color>
+    <color name="colorIcondistance">#ad3bda</color>
+    <color name="colorIconspeed">#3bda88</color>
     <color name="colorwhite">#FFFFFf</color>
     <color name="colorDivider">#B6B6B6</color>
     <color name="colorline">#4fec80</color>
