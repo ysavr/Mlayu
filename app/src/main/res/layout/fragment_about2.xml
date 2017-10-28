@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="Auotomatic route Tracking and record activity"
+            android:text="Automatic route Tracking and record activities"
             android:textSize="9pt"/>
 
 

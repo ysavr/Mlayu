@@ -61,24 +61,24 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        Prof_Section = (LinearLayout) findViewById(R.id.Prof_section);
-        SignOut = (Button) findViewById(R.id.btn_logout);
+//        Prof_Section = (LinearLayout) findViewById(R.id.Prof_section);
+//        SignOut = (Button) findViewById(R.id.btn_logout);
         SignIn = (SignInButton) findViewById(R.id.btn_login);
         Button_withemail = (Button) findViewById(R.id.btn_loginemail);
         Button_withemail.setVisibility(View.GONE);
 
-        Nama = (TextView) findViewById(R.id.name);
+//        Nama = (TextView) findViewById(R.id.name);
         Email = (TextView) findViewById(R.id.email);
-        Prof_Pic = (ImageView) findViewById(R.id.Prof_pic);
+//        Prof_Pic = (ImageView) findViewById(R.id.Prof_pic);
         framelogin = (RelativeLayout) findViewById(R.id.layoutlogin);
 
         SignIn.setOnClickListener(this);
-        SignOut.setOnClickListener(this);
+//        SignOut.setOnClickListener(this);
         Button_withemail.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
 
 
-        Prof_Section.setVisibility(View.GONE);
+//        Prof_Section.setVisibility(View.GONE);
 
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -145,9 +145,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
             case R.id.btn_login:
                 SignIn();
                 break;
-            case R.id.btn_logout:
-                SignOut();
-                break;
+//            case R.id.btn_logout:
+//                SignOut();
+//                break;
             case R.id.btn_loginemail:
                 Register();
                 break;
@@ -194,17 +194,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
             String name = account.getDisplayName();
             String email = account.getEmail();
             String img_url = account.getPhotoUrl().toString();
-            Nama.setText(name);
-            Email.setText(email);
-            Glide.with(this).load(img_url).into(Prof_Pic);
+//            Nama.setText(name);
+//            Email.setText(email);
+//            Glide.with(this).load(img_url).into(Prof_Pic);
 
             progressDialog.setMessage("Please wait...");
             progressDialog.show();
-            updateUI(true);
+         //  updateUI(true);
         }
         else
         {
-            updateUI(false);
+          //  updateUI(false);
         }
     }
 
@@ -263,16 +263,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 
     private void updateUI (boolean isLogin)
     {
-        if (isLogin)
-        {
-            Prof_Section.setVisibility(View.GONE);
-            framelogin.setVisibility(View.GONE);
-        }
-        else
-        {
-            Prof_Section.setVisibility(View.GONE);
-            framelogin.setVisibility(View.VISIBLE);
-        }
+//        if (isLogin)
+//        {
+//            Prof_Section.setVisibility(View.GONE);
+//            framelogin.setVisibility(View.GONE);
+//        }
+//        else
+//        {
+//            Prof_Section.setVisibility(View.GONE);
+//            framelogin.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override

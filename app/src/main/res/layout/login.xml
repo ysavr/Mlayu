@@ -7,8 +7,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
+    android:background="@drawable/flatwallpaper"
     tools:context="com.example.savr.mlayu.Login.Login">
-
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,25 +60,8 @@
                 android:id="@+id/btn_logout"/>
 
         </LinearLayout>
-
-
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_centerInParent="true">
-        <ImageView
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/icon_gradien"
-            />
-
-    </LinearLayout>
-
-
+    -->
 
     <RelativeLayout
         android:layout_width="match_parent"
