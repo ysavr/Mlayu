@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,9 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.savr.mlayu.Activity.HomeActivity;
-import com.example.savr.mlayu.Model.UserProfile;
 import com.example.savr.mlayu.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,15 +34,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
 
     private LinearLayout Prof_Section;
+    private RelativeLayout layoutbtnlogin;
     private RelativeLayout framelogin;
     private Button SignOut,Button_withemail;
     private SignInButton SignIn;
@@ -50,17 +47,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     private ImageView Prof_Pic;
 
     private GoogleApiClient googleApiClient;
-
     private static final int REQ_CODE = 9001;
 
     ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
 
     private FirebaseAuth mAuth;
+    Animation uptodown;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        layoutbtnlogin = (RelativeLayout) findViewById(R.id.layoutbtnlogin);
+        uptodown = AnimationUtils.loadAnimation(this,R.anim.downtoup);
+        layoutbtnlogin.setAnimation(uptodown);
 //        Prof_Section = (LinearLayout) findViewById(R.id.Prof_section);
 //        SignOut = (Button) findViewById(R.id.btn_logout);
         SignIn = (SignInButton) findViewById(R.id.btn_login);
@@ -70,7 +71,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 //        Nama = (TextView) findViewById(R.id.name);
         Email = (TextView) findViewById(R.id.email);
 //        Prof_Pic = (ImageView) findViewById(R.id.Prof_pic);
-        framelogin = (RelativeLayout) findViewById(R.id.layoutlogin);
+        framelogin = (RelativeLayout) findViewById(R.id.layoutbtnlogin);
 
         SignIn.setOnClickListener(this);
 //        SignOut.setOnClickListener(this);
