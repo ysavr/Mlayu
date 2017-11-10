@@ -99,33 +99,33 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-//        if (firebaseUser!=null){
-//            String id = firebaseUser.getUid();
-//            progressDialog.show();
-//            databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
-//            ValueEventListener getdata = new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-//                    if (userProfile!=null){
-//                        if (userProfile.getGender()==null){
-//                            goToDataUser();
-//                        }
-//                        else{
-//                            goToHome();
-//                        }
-//                    }else {
-//                        goToDataUser();
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            };
-//            databaseReference.addValueEventListener(getdata);
-//        }
+        if (firebaseUser!=null){
+            String id = firebaseUser.getUid();
+            progressDialog.show();
+            databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
+            ValueEventListener getdata = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                    if (userProfile!=null){
+                        if (userProfile.getGender()==null){
+                            goToDataUser();
+                        }
+                        else{
+                            goToHome();
+                        }
+                    }else {
+                        goToDataUser();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+            databaseReference.addValueEventListener(getdata);
+        }
 
     }
 
@@ -226,7 +226,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("success","sad");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(true);
+//                            updateUI(true);
 //                            Intent signin = new Intent(Login.this,HomeActivity.class);
 //                            startActivity(signin);
                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
