@@ -14,15 +14,17 @@ public class Lari {
     private double jarak;
     private double kalori;
     private String tanggal;
+    private String jam;
 
 
-    public Lari(String id_user, String id, long waktu, double jarak, double kalori, String tanggal) {
+    public Lari(String id_user, String id, long waktu, double jarak, double kalori, String tanggal,String jam) {
         this.id = id;
         this.id_user = id_user;
         this.waktu = waktu;
         this.jarak = jarak;
         this.kalori = kalori;
         this.tanggal = tanggal;
+        this.jam = jam;
     }
 
     public String getId() {
@@ -71,6 +73,14 @@ public class Lari {
 
     public void setTanggal(String tanggal) {
         this.tanggal = tanggal;
+    }
+
+    public String getJam() {
+        return jam;
+    }
+
+    public void setJam(String jam) {
+        this.jam = jam;
     }
 
     public Lari() {

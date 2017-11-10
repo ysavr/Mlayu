@@ -210,7 +210,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         }
         else
         {
-          //  updateUI(false);
+            updateUI(false);
         }
     }
 
@@ -231,29 +231,29 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
 //                            startActivity(signin);
                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                             if (firebaseUser!=null){
-//                                String id = firebaseUser.getUid();
-//
-//                                databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
-//                                ValueEventListener getdata = new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                                        UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-//                                        if (userProfile!=null){
-//                                            if (userProfile.getGender()==null)goToDataUser();
-//                                            else goToHome();
-//                                        }else {
-//                                            goToDataUser();
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                };
-//                                databaseReference.addValueEventListener(getdata);
+                                String id = firebaseUser.getUid();
+
+                                databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
+                                ValueEventListener getdata = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                                        if (userProfile!=null){
+                                            if (userProfile.getGender()==null)goToDataUser();
+                                            else goToHome();
+                                        }else {
+                                            goToDataUser();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                };
+                                databaseReference.addValueEventListener(getdata);
                             }
-                            goToDataUser();
+                           // goToDataUser();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("failure", task.getException());
@@ -264,19 +264,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
                     }
                 });
     }
-
+/*jika sudah pernah login*/
     private void updateUI (boolean isLogin)
     {
-//        if (isLogin)
-//        {
+        if (isLogin)
+        {
 //            Prof_Section.setVisibility(View.GONE);
 //            framelogin.setVisibility(View.GONE);
-//        }
-//        else
-//        {
+            goToHome();
+        }
+        else
+        {
 //            Prof_Section.setVisibility(View.GONE);
 //            framelogin.setVisibility(View.VISIBLE);
-//        }
+            Toast.makeText(Login.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

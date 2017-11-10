@@ -1,11 +1,13 @@
 package com.example.savr.mlayu.Fragment;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -86,6 +88,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     private String id;
     private Polyline pol;
     String timeStamp;
+    String jamStamp;
 
     private boolean pauseClicked;
     private long timeWhenStopped = 0;
@@ -94,11 +97,14 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
     static final Double EARTH_RADIUS = 6371.00;
     static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int MY_PERMISSION_REQUEST_COARSE_LOCATION = 2;
+    private boolean permissionIsGranted = false;
 
     ProgressDialog progressDialog;
 
     ArrayList<LatLng> titik;
     ArrayList<Double> jarak;
+    ArrayList<Double> avgspeed;
     private ValueEventListener getdata;
 
     public Mlayu_Fragment() {
@@ -140,10 +146,31 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if (permissionIsGranted)
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (permissionIsGranted){
+            if (googleApiClient.isConnected()){
+                requestUpdate();
+            }else LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-
+        if (permissionIsGranted) {
+            googleApiClient.disconnect();
+        }
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
         databaseReference.removeEventListener(getdata);
+
     }
 
     @Override
@@ -152,6 +179,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
         titik = new ArrayList<>();
         jarak = new ArrayList<>();
+        avgspeed = new ArrayList<>();
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mlayu, container, false);
 
@@ -168,6 +196,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         Button buttonStart = (Button) v.findViewById(R.id.btn_Start);
         final Button buttonPause = (Button) v.findViewById(R.id.btn_Pause);
         final Button buttoStop = (Button) v.findViewById(R.id.btn_Stop);
+
+        Chronometer chronometer = (Chronometer) v.findViewById(R.id.chronometer);
 
         buttoStop.setEnabled(false);
         buttonPause.setEnabled(false);
@@ -224,8 +254,10 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
     public void start(View view) throws IOException {
         if (!pauseClicked) {
+
             titik = new ArrayList<>();
             jarak = new ArrayList<>();
+            avgspeed = new ArrayList<>();
             totaljarak = 0;
             kaloriburn = 0;
             distTextView.setText(Double.parseDouble(new DecimalFormat("#.###").format(totaljarak)) + " Km's.");
@@ -255,9 +287,11 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
         double jarak = totaljarak;
         long durasi = timeWhenStopped*(-1); //dalam millisecond
         String tanggal = timeStamp;
-
+        String jam = jamStamp;
+        averagespeed = totaljarak/durasi;
+        Log.d("Average Speed", String.valueOf(averagespeed));
         //save data lari
-        Lari lari = new Lari(id,id_lari,durasi, jarak,calorieburn,tanggal);
+        Lari lari = new Lari(id,id_lari,durasi, jarak,calorieburn,tanggal,jam);
         databaseReference.child(id_lari).setValue(lari).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -306,6 +340,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
     }
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
@@ -323,6 +359,11 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }else {
+                permissionIsGranted = true;
+            }
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
@@ -337,26 +378,49 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
         PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);
         pol=mGoogleMap.addPolyline(polilyne);
+
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getActivity(),
+//                            "permission was granted, :)",
+//                            Toast.LENGTH_LONG).show();
+//                            requestUpdate();
+//                } else {
+//                    Toast.makeText(getActivity(),
+//                            "permission denied, ...:(",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//                return;
+//            }
+//        }
+//    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(),
-                            "permission was granted, :)",
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    permissionIsGranted = true;
+                Toast.makeText(getActivity(),"permission was granted, :)",
                             Toast.LENGTH_LONG).show();
-                            requestUpdate();
-                } else {
-                    Toast.makeText(getActivity(),
-                            "permission denied, ...:(",
+                    requestUpdate();
+            }
+                else{
+                    permissionIsGranted = false;
+                    Toast.makeText(getActivity(),"permission denied, ...:(",
                             Toast.LENGTH_LONG).show();
                 }
-                return;
-            }
+                break;
         }
     }
 
@@ -411,6 +475,11 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 ActivityCompat.checkSelfPermission(getActivity(),
                         android.Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }else {
+                permissionIsGranted = true;
+            }
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, mLocationRequest, this);
@@ -424,6 +493,9 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 && ActivityCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
             return;
         }
         LocationServices.FusedLocationApi.
@@ -452,14 +524,18 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 
     double totaljarak=0;
     double kaloriburn=0;
+    double averagespeed = 0;
     int berat_badan;
     Location locationOld;
     @Override
     public void onLocationChanged(Location location) {
+
         if(!pauseClicked) {
             if (location == null) {
                 Toast.makeText(getActivity(), "Can't get current location", Toast.LENGTH_LONG).show();
             } else {
+//                PolylineOptions polilyne = new PolylineOptions().color(Color.RED).geodesic(true);
+//                pol=mGoogleMap.addPolyline(polilyne);
                 LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                 CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 20);
                 mGoogleMap.animateCamera(update);
@@ -484,10 +560,10 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 latitudeText.setText("Latitude : " + String.valueOf(mylatitude));
                 longitudeText.setText("Langitude : " + String.valueOf(mylongitude));
 
-            //    Log.d("TITIK", mylatitude + " " + mylongitude);
+//                Log.d("TITIK", mylatitude + " " + mylongitude);
                 titik.add(new LatLng(mylatitude, mylongitude));
                 pol.setPoints(titik);
-            //    Log.d("JARAK", String.valueOf(distance));
+//                Log.d("JARAK", String.valueOf(distance));
                 totaljarak = totaljarak + distance;
 
                 double speed = location.getSpeed() * 18 / 5;    //convert ke km/h dari m/s =>36000/1000
@@ -497,7 +573,9 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
 //                Log.d("Berat badan: ", berat_badan+" kg");
 //                Log.d("Total Jarak: ", totaljarak+" km");
 //                Log.d("KALORI KEBAKAR", String.valueOf(kaloriburn));
-                timeStamp = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(Calendar.getInstance().getTime());
+                Calendar calendar = Calendar.getInstance();
+                timeStamp = new SimpleDateFormat("MM/dd/yyyy").format(calendar.getTime());
+                jamStamp = new SimpleDateFormat("HH:mm").format(calendar.getTime());
             //    Log.d("",timeStamp);
 
                 //speed
