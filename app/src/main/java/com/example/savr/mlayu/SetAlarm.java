@@ -21,8 +21,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class SetAlarm extends AppCompatActivity {
-    Button btnSet;
-    EditText edSet;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
     EditText txt_tgl,txt_jam;
@@ -34,9 +32,6 @@ public class SetAlarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
-
-       /* edSet = (EditText) findViewById(R.id.SetAlarmText);
-        btnSet = (Button) findViewById(R.id.setAlarmButton);*/
 
         txt_tgl=(EditText) findViewById(R.id.txt_tgl);
         txt_jam=(EditText) findViewById(R.id.txt_jam);
