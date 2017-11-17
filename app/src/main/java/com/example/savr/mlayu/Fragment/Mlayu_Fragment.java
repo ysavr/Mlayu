@@ -91,6 +91,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     String jamStamp;
 
     private boolean pauseClicked;
+    private boolean drawline;
     private long timeWhenStopped = 0;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseTitik;
@@ -556,7 +557,8 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 //jarak.add(distance);
             }
 
-            if (distance < 0.2 || mylatitudeold == 0) {
+            if (distance < 0.2 || mylatitudeold == 0 && drawline) {
+                drawline = true;
                 latitudeText.setText("Latitude : " + String.valueOf(mylatitude));
                 longitudeText.setText("Langitude : " + String.valueOf(mylongitude));
 
@@ -589,6 +591,9 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 mylatitudeold = mylatitude;
                 mylongitudeold = mylongitude;
             }
+        }else {
+            drawline = false;
+            pol.remove();
         }
     }
 

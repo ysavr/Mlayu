@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    tools:context="com.example.savr.mlayu.SetAlarm">
+    <EditText
+        android:id="@+id/txt_tgl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:hint="Tanggal"
+        />
+    <EditText
+        android:id="@+id/txt_jam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:hint="Jam"
+        />
+    <Button
+        android:id="@+id/btn_get_datetime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_backgroud"
+        android:text="Set Alarm"
+        android:textColor="@color/colorwhite"
+        android:layout_marginTop="20dp"/>
+
+
+<!--    <EditText
+        android:id="@+id/SetAlarmText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="16dp"
+        />
+
+    <Button
+        android:id="@+id/setAlarmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Alarm"/>-->
+
+</LinearLayout>

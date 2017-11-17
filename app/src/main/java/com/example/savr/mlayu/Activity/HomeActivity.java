@@ -1,6 +1,8 @@
 package com.example.savr.mlayu.Activity;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.savr.mlayu.Alarm;
 import com.example.savr.mlayu.Fragment.AboutFragment1;
 import com.example.savr.mlayu.Fragment.HistoryFragment;
 import com.example.savr.mlayu.Fragment.MeFragment;
 import com.example.savr.mlayu.Fragment.Mlayu_Fragment;
 import com.example.savr.mlayu.Login.Login;
 import com.example.savr.mlayu.R;
+import com.example.savr.mlayu.SetAlarm;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -34,6 +38,9 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Calendar;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -90,7 +97,7 @@ public class HomeActivity extends AppCompatActivity
             String email = firebaseUser.getEmail();
             String img_url = firebaseUser.getPhotoUrl().toString();
 
-            Log.d("name"," "+name);
+//            Log.d("name"," "+name);
             namaText.setText(name);
             emailText.setText(email);
             Glide.with(this).load(img_url).into(poto_Profil);
@@ -152,6 +159,17 @@ public class HomeActivity extends AppCompatActivity
                     startActivity(signout);
                 }
             });
+        } else if (id == R.id.setAlarm) {
+//            Toast.makeText(this,"Alarm Success Set !!!",Toast.LENGTH_LONG).show();
+//            Calendar cal = Calendar.getInstance();
+//            cal.add(Calendar.SECOND, 10);
+//
+//            Intent i = new Intent(HomeActivity.this,Alarm.class);
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,i,0);
+//            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+            Intent Tosetalarm = new Intent(HomeActivity.this,SetAlarm.class);
+            startActivity(Tosetalarm);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -186,11 +204,6 @@ public class HomeActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_about) {
-//            AboutFragment1 fragment = new AboutFragment1();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction =
-//                    getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.fragment_container,fragment);
-//            fragmentTransaction.commit();
             Intent intent = new Intent(this,AboutActivity.class);
             startActivity(intent);
         }

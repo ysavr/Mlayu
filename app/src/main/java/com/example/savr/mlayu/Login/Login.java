@@ -215,7 +215,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("id",acct.getId());
+//        Log.d("id",acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
