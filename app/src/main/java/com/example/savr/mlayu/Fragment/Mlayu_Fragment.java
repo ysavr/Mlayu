@@ -127,7 +127,7 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
                 berat_badan=userProfile.getBerat();
-                Log.d("Berat badan: ", berat_badan+" kg");
+//                Log.d("Berat badan: ", berat_badan+" kg");
 
             }
 
