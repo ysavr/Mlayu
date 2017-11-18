@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -34,6 +35,11 @@ public class SetAlarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        toolbar.setTitle("Schedule");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btn_get_datetime=(Button) findViewById(R.id.btn_get_datetime);
         textViewhour = (TextView) findViewById(R.id.texthour);
@@ -147,6 +153,8 @@ public class SetAlarm extends AppCompatActivity {
                 Intent i = new Intent(SetAlarm.this,Alarm.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,i,0);
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP,myCalendar.getTimeInMillis(),pendingIntent);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),pendingIntent);
             }
         });

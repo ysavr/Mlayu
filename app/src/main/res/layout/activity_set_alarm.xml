@@ -5,10 +5,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="30dp"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
     tools:context="com.example.savr.mlayu.SetAlarm">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
 <!--    <EditText
         android:id="@+id/txt_tgl"
         android:layout_width="match_parent"
@@ -27,6 +35,7 @@
         android:focusable="false"
         android:hint="Jam" />-->
     <TextView
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tanggal :"/>
