@@ -160,16 +160,16 @@ public class HomeActivity extends AppCompatActivity
                 }
             });
         } else if (id == R.id.setAlarm) {
-//            Toast.makeText(this,"Alarm Success Set !!!",Toast.LENGTH_LONG).show();
-//            Calendar cal = Calendar.getInstance();
-//            cal.add(Calendar.SECOND, 10);
-//
-//            Intent i = new Intent(HomeActivity.this,Alarm.class);
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,i,0);
-//            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
-            Intent Tosetalarm = new Intent(HomeActivity.this,SetAlarm.class);
-            startActivity(Tosetalarm);
+            Toast.makeText(this,"Alarm Success Set !!!",Toast.LENGTH_LONG).show();
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MINUTE, 1);
+
+            Intent i = new Intent(HomeActivity.this,Alarm.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,i,0);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+//            Intent Tosetalarm = new Intent(HomeActivity.this,SetAlarm.class);
+//            startActivity(Tosetalarm);
         }
         return super.onOptionsItemSelected(item);
     }

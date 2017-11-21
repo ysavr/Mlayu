@@ -44,6 +44,8 @@ public class SetAlarm extends AppCompatActivity {
         btn_get_datetime=(Button) findViewById(R.id.btn_get_datetime);
         textViewhour = (TextView) findViewById(R.id.texthour);
         textViewdate = (TextView) findViewById(R.id.textdate);
+
+        textViewdate.setVisibility(View.GONE);
         myCalendar = Calendar.getInstance();
 
         date = new DatePickerDialog.OnDateSetListener() {

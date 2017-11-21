@@ -34,11 +34,11 @@
         android:editable="false"
         android:focusable="false"
         android:hint="Jam" />-->
-    <TextView
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tanggal :"/>
+    <!--<TextView-->
+        <!--android:paddingTop="20dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Tanggal :"/>-->
 
         <TextView
             android:id="@+id/textdate"
