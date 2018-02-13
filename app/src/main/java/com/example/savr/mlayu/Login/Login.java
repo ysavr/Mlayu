@@ -73,6 +73,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         Button_withemail = (Button) findViewById(R.id.btn_loginemail);
         Button_withemail.setVisibility(View.GONE);
 
+
 //        Nama = (TextView) findViewById(R.id.name);
         Email = (TextView) findViewById(R.id.email);
 //        Prof_Pic = (ImageView) findViewById(R.id.Prof_pic);
@@ -130,6 +131,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     }
 
     private void goToDataUser() {
+        progressDialog.setMessage("Please wait...");
         progressDialog.show();
         Intent gotoDataUser = new Intent(getApplicationContext(),Data_user.class);
         startActivity(gotoDataUser);
@@ -137,6 +139,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
     }
 
     private void goToHome(){
+        progressDialog.setMessage("Please wait...");
         progressDialog.show();
         Intent gotoMlayuFragment = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(gotoMlayuFragment);
@@ -271,7 +274,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,Goo
         {
 //            Prof_Section.setVisibility(View.GONE);
 //            framelogin.setVisibility(View.GONE);
-            goToHome();
+//            goToHome();
         }
         else
         {

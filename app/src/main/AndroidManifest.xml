@@ -84,14 +84,16 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-        android:name=".SetAlarm"
-        android:parentActivityName=".Activity.HomeActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".Activity.HomeActivity" />
-    </activity>
+            android:name=".SetAlarm"
+            android:parentActivityName=".Activity.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.HomeActivity" />
+        </activity>
 
-        <receiver android:name=".Alarm"/>
+        <receiver android:name=".Alarm" />
+
+        <activity android:name=".Login.DummyActivity"></activity>
     </application>
 
 </manifest>

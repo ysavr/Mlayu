@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.savr.mlayu.Login.Data_user;
+import com.example.savr.mlayu.Login.Login;
 import com.example.savr.mlayu.Model.Lari;
 import com.example.savr.mlayu.Model.Titik;
 import com.example.savr.mlayu.Model.UserProfile;
@@ -316,6 +317,10 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(getActivity(), "Berhasil Simpan", Toast.LENGTH_SHORT).show();
+                }else {
+                    Log.w("failure", task.getException());
+                    Toast.makeText(getActivity(), "Gagal Menyimpan.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -562,18 +567,18 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
                 latitudeText.setText("Latitude : " + String.valueOf(mylatitude));
                 longitudeText.setText("Langitude : " + String.valueOf(mylongitude));
 
-//                Log.d("TITIK", mylatitude + " " + mylongitude);
+                Log.d("TITIK", mylatitude + " " + mylongitude);
                 titik.add(new LatLng(mylatitude, mylongitude));
                 pol.setPoints(titik);
-//                Log.d("JARAK", String.valueOf(distance));
+                Log.d("JARAK", String.valueOf(distance));
                 totaljarak = totaljarak + distance;
 
                 double speed = location.getSpeed() * 18 / 5;    //convert ke km/h dari m/s =>36000/1000
 
                 //kalori
-                kaloriburn = 0.8*berat_badan*totaljarak;
+                kaloriburn = 8.0*berat_badan*totaljarak;
 //                Log.d("Berat badan: ", berat_badan+" kg");
-//                Log.d("Total Jarak: ", totaljarak+" km");
+                Log.d("Total Jarak: ", totaljarak+" km");
 //                Log.d("KALORI KEBAKAR", String.valueOf(kaloriburn));
                 Calendar calendar = Calendar.getInstance();
                 timeStamp = new SimpleDateFormat("MM/dd/yyyy").format(calendar.getTime());
@@ -601,11 +606,18 @@ public class Mlayu_Fragment extends Fragment implements OnMapReadyCallback,
     public double CalculationByDistance(double lat1, double lon1, double lat2, double lon2) {
         double Radius = EARTH_RADIUS;
         double dLat = Math.toRadians(lat2-lat1);
+        Log.d("dLat", dLat + " ");
         double dLon = Math.toRadians(lon2-lon1);
+        Log.d("dLon", dLon + " ");
         double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                    Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                    Math.sin(dLon/2) * Math.sin(dLon/2);
+        Log.d("a", a + " ");
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Log.d("c", c + " ");
+        double jaraks = Radius *c;
+        Log.d("jaraks", jaraks + " ");
+        Log.d("radius", Radius + " ");
         return Radius * c;
     }
 
